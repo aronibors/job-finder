@@ -1,54 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Step-by-Step Job Finder</title>
   <style>
     section { display: none; }
     section:target { display: block; }
-    /* Show step1 by default if no hash */
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    select {
-      padding: 10px;
-      margin: 10px 0;
-      width: 100%;
-      max-width: 400px;
-    }
-    table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0 8px;
-      margin-top: 20px;
-    }
-    th, td {
-      padding: 12px 16px;
-      border: 1px solid #ccc;
-      text-align: left;
-      vertical-align: top;
-      background-color: #fff;
-    }
-    th {
-      background-color: #f0f0f0;
-      font-weight: bold;
-    }
-    button {
-      margin: 10px 5px;
-      padding: 10px 20px;
-    }
+    body { font-family: sans-serif; margin: 20px; }
+    h2 { margin-top: 0; }
+    button { margin: 5px; padding: 8px 12px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #f4f4f4; }
   </style>
 </head>
 <body>
 
 <section id="step1">
   <h2>Welcome to the Job Finder</h2>
-  <p>First click Educational attainment.</p><br>
-  <p>Secondly, click the desired job category in the chosen educational attainment.</p><br>
-  <p>Thirdly, it will show the job names in said category, their annual wage before taxes, and affordability index (annual wage/monthly rent).</p><br>
-  <p>Fourth and finally, the Google spreadsheet which the data was gathered from, with all the jobs, wages, employment availability, and affordability index will be available for download.</p><br>
-  <a href="#step2"><button>Continue to Step 1</button></a>
+  <p>First click <strong>Educational attainment</strong>.</p>
+  <p>Secondly, click the desired job category in the chosen educational attainment.</p>
+  <p>Thirdly, it will show the job names in said category, their annual wage before taxes, and affordability index (annual wage/monthly rent).</p>
+  <p>Fourth and finally, the Google spreadsheet which the data was gathered from, with all the jobs, wages, employment availability, and affordability index will be available for download.</p>
+  <a href="#step2"><button>Continue</button></a>
 </section>
 
 <section id="step2">
@@ -60,18 +35,22 @@
     <option value="Postsecondary nondegree award">Postsecondary nondegree award</option>
     <option value="Associate's degree">Associate's degree</option>
     <option value="Bachelor's degree">Bachelor's degree</option>
-  </select><br>
-  <a href="#step1"><button>Back</button></a>
-  <a href="#step3"><button>Continue to Step 2</button></a>
+  </select>
+  <div>
+    <a href="#step1"><button>Back</button></a>
+    <a href="#step3"><button>Continue</button></a>
+  </div>
 </section>
 
 <section id="step3">
   <h2>Step 2: Choose Job Category</h2>
   <select id="catSelect" onchange="populateJobs()">
     <option value="">-- Select Category --</option>
-  </select><br>
-  <a href="#step2"><button>Back</button></a>
-  <a href="#step4"><button>Continue to Step 3</button></a>
+  </select>
+  <div>
+    <a href="#step2"><button>Back</button></a>
+    <a href="#step4"><button>Continue</button></a>
+  </div>
 </section>
 
 <section id="step4">
@@ -87,130 +66,61 @@
     </thead>
     <tbody></tbody>
   </table>
-  <a href="#step3"><button>Back</button></a>
-  <a href="#step5"><button>Continue to Step 4</button></a>
+  <div>
+    <a href="#step3"><button>Back</button></a>
+    <a href="#step5"><button>Continue</button></a>
+  </div>
 </section>
 
 <section id="step5">
   <h2>Step 4: Conclusion</h2>
   <p>Download the full spreadsheet containing job titles, wages, employment, and affordability index:</p>
-  <a href="https://docs.google.com/spreadsheets/d/19ziRp1iNENdopAgHci7nJTNzTbgiFV1xRYE2QhjCgq0/edit?usp=sharing" target="_blank">
-    📄 Google Sheet
-  </a><br><br>
-  <a href="#step4"><button>Back</button></a>
-  <button onclick="window.close()">Exit</button>
+  <a href="https://docs.google.com/spreadsheets/d/19ziRp1iNENdopAgHci7nJTNzTbgiFV1xRYE2QhjCgq0" target="_blank">📄 Google Sheet</a>
+  <div>
+    <a href="#step4"><button>Back</button></a>
+    <a href="#step1"><button>Restart</button></a>
+  </div>
 </section>
 
 <script>
-// JOB DATA STARTS HERE
-const data = {
-  "No formal educational credential": {
-    "artist": [
-      { "Occupation": "Artists and Related Workers, All Other", "Employment": "400", "Annual Wage": "$117,810", "Affordability Index": "39.31" },
-      { "Occupation": "Craft Artists", "Employment": "230", "Annual Wage": "$108,234", "Affordability Index": "36.11" }
-    ],
-    "custodian": [
-      { "Occupation": "Building Cleaner", "Employment": "2,400", "Annual Wage": "$40,200", "Affordability Index": "25.20" }
-    ]
-  },
-  "High school diploma or equivalent": {
-    "construction": [
-      { "Occupation": "Construction and Building Inspector", "Employment": "2,590", "Annual Wage": "$99,364", "Affordability Index": "33.15" }
-    ],
-    "supply-chain": [
-      { "Occupation": "Transportation Inspector", "Employment": "480", "Annual Wage": "$96,422", "Affordability Index": "32.17" }
-    ],
-    "sales": [
-      { "Occupation": "Insurance Sales Agent", "Employment": "11,000", "Annual Wage": "$88,072", "Affordability Index": "29.38" }
-    ]
-  },
-  "Postsecondary nondegree award": {
-    "construction": [
-      { "Occupation": "Firefighters", "Employment": "4,050", "Annual Wage": "$113,175", "Affordability Index": "37.76" }
-    ],
-    "industrial": [
-      { "Occupation": "Lighting Technician", "Employment": "2,620", "Annual Wage": "$92,471", "Affordability Index": "30.85" }
-    ],
-    "technician": [
-      { "Occupation": "Sound Engineering Technician", "Employment": "4,310", "Annual Wage": "$87,704", "Affordability Index": "29.26" }
-    ]
-  },
-  "Associate's degree": {
-    "assistant for doctor": [
-      { "Occupation": "Dental Hygienist", "Employment": "5,380", "Annual Wage": "$115,681", "Affordability Index": "38.6" }
-    ],
-    "legal assistant": [
-      { "Occupation": "Paralegals and Legal Assistants", "Employment": "12,530", "Annual Wage": "$81,125", "Affordability Index": "27.07" }
-    ],
-    "engineer technician": [
-      { "Occupation": "Broadcast Technician", "Employment": "5,000", "Annual Wage": "$116,417", "Affordability Index": "38.84" }
-    ]
-  },
-  "Bachelor's degree": {
-    "engineer": [
-      { "Occupation": "Mechanical Engineer", "Employment": "4,500", "Annual Wage": "$91,000", "Affordability Index": "38.10" }
-    ],
-    "educator": [
-      { "Occupation": "High School Teacher", "Employment": "5,100", "Annual Wage": "$65,000", "Affordability Index": "30.20" }
-    ],
-    "marketing/business": [
-      { "Occupation": "Marketing Analyst", "Employment": "3,200", "Annual Wage": "$74,500", "Affordability Index": "33.00" }
-    ],
-    "cinematography": [
-      { "Occupation": "Film Director", "Employment": "1,100", "Annual Wage": "$88,000", "Affordability Index": "35.80" }
-    ],
-    "scientists": [
-      { "Occupation": "Chemist", "Employment": "2,200", "Annual Wage": "$79,000", "Affordability Index": "31.00" }
-    ]
-  }
-};
+  const data = /* ... your data object here ... */ {};
+  const catMap = /* ... your category mapping here ... */ {};
 
-const catMap = {
-  "No formal educational credential": ["artist", "custodian"],
-  "High school diploma or equivalent": ["construction", "supply-chain", "sales"],
-  "Postsecondary nondegree award": ["construction", "industrial", "technician"],
-  "Associate's degree": ["assistant for doctor", "legal assistant", "engineer technician"],
-  "Bachelor's degree": ["engineer", "educator", "marketing/business", "cinematography", "scientists"]
-};
-
-function populateCategory() {
-  const edu = document.getElementById("eduSelect").value;
-  const catSelect = document.getElementById("catSelect");
-  catSelect.innerHTML = '<option value="">-- Select Category --</option>';
-  if (edu && catMap[edu]) {
-    for (let cat of catMap[edu]) {
-      catSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+  function populateCategory() {
+    const edu = document.getElementById('eduSelect').value;
+    const catSelect = document.getElementById('catSelect');
+    catSelect.innerHTML = '<option value="">-- Select Category --</option>';
+    if (edu && catMap[edu]) {
+      catMap[edu].forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        catSelect.appendChild(opt);
+      });
     }
   }
-}
 
-function populateJobs() {
-  const edu = document.getElementById("eduSelect").value;
-  const cat = document.getElementById("catSelect").value;
-  const tbody = document.querySelector("#jobTable tbody");
-  tbody.innerHTML = "";
-  if (edu && cat && data[edu][cat]) {
-    data[edu][cat].forEach(job => {
-      tbody.innerHTML += `
-        <tr>
-          <td>${job['Occupation']}</td>
-          <td>${job['Employment']}</td>
-          <td>${job['Annual Wage']}</td>
-          <td>${job['Affordability Index']}</td>
-        </tr>`;
-    });
-  }
-}
-</script>
-
-<script>
-  // Fallback for browsers without :has()
-  window.onload = function () {
-    if (!location.hash) {
-      location.hash = "#step1";
+  function populateJobs() {
+    const edu = document.getElementById('eduSelect').value;
+    const cat = document.getElementById('catSelect').value;
+    const tbody = document.querySelector('#jobTable tbody');
+    tbody.innerHTML = '';
+    if (edu && cat && data[edu][cat]) {
+      data[edu][cat].forEach(job => {
+        const row = document.createElement('tr');
+        ['Occupation', 'Employment', 'Annual Wage', 'Afford(I/O)'].forEach(key => {
+          const cell = document.createElement('td');
+          cell.textContent = job[key];
+          row.appendChild(cell);
+        });
+        tbody.appendChild(row);
+      });
     }
-  };
-</script>
+  }
 
+  window.addEventListener('DOMContentLoaded', () => {
+    if (!location.hash) location.hash = '#step1';
+  });
+</script>
 </body>
 </html>
