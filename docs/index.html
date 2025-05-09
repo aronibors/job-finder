@@ -1,71 +1,3 @@
-from collections import defaultdict
-import pandas as pd
-
-# Reload and process the Excel data again
-excel_path = "/mnt/data/Optimization Data(min Education, max Job Availability, max pay, max affordable Housing (1).xlsx"
-df = pd.read_excel(excel_path, sheet_name="Updated_Wage_to_Housing_Ratio")
-df_cleaned = df[['Occupation', 'Education Level', 'Annual Wage', 'Employment', 'Afford(I/O)']].dropna()
-df_cleaned = df_cleaned[df_cleaned['Afford(I/O)'] > 25]
-
-# Restrict to selected education levels
-edu_levels = {
-    "No formal educational credential": ["artist", "custodian"],
-    "High school diploma or equivalent": ["construction", "supply-chain", "sales"],
-    "Postsecondary nondegree award": ["construction", "industrial", "technician"],
-    "Associate's degree": ["assistant for doctor", "lawyer", "engineer technician"],
-    "Bachelor's degree": ["research", "K12 educator/worker", "marketing", "agents", "scientists"]
-}
-
-# Keyword mapping for categories
-keyword_mapping = {
-    "artist": ["artist", "model", "painter", "craft", "sculptor", "illustrator"],
-    "custodian": ["cleaner", "janitor", "custodian"],
-
-    "construction": ["construction", "roofer", "installer", "carpenter", "plumber", "electrician", "rigger", "engineer"],
-    "supply-chain": ["inspector", "longshoreman", "millwright", "mail", "freight", "rig", "refinery"],
-    "sales": ["sales", "representative", "agent", "insurance", "real estate", "media"],
-
-    "industrial": ["refinery", "millwright", "rig", "plant", "gas", "machinery"],
-    "technician": ["technician", "repair", "electronics", "avionics", "sound", "lighting"],
-
-    "assistant for doctor": ["radiologist", "occupational", "radiation", "hygienist", "therapist", "vet"],
-    "lawyer": ["paralegal"],
-    "engineer technician": ["engineering technician", "broadcast", "food science"],
-
-    "research": ["scientist", "research"],
-    "K12 educator/worker": ["teacher", "educator", "instructor", "school", "tutor"],
-    "marketing": ["marketing", "public relations", "communications", "media"],
-    "agents": ["agent", "representative"],
-    "scientists": ["scientist", "chemist", "biologist", "physicist"]
-}
-
-# Assign jobs into nested structure
-categorized_jobs = defaultdict(lambda: defaultdict(list))
-for _, row in df_cleaned.iterrows():
-    edu = row['Education Level']
-    occupation = str(row['Occupation']).lower()
-    if edu in edu_levels:
-        for cat in edu_levels[edu]:
-            if any(keyword in occupation for keyword in keyword_mapping.get(cat, [])):
-                categorized_jobs[edu][cat].append({
-                    'Occupation': row['Occupation'],
-                    'Annual Wage': row['Annual Wage'],
-                    'Employment': row['Employment'],
-                    'Afford(I/O)': row['Afford(I/O)']
-                })
-                break
-
-# Build JavaScript-compatible data object
-js_data = {
-    edu: {
-        cat: jobs for cat, jobs in cats.items()
-    }
-    for edu, cats in categorized_jobs.items()
-}
-
-# Write HTML content
-import json
-html_content = f"""
 <!DOCTYPE html>
 <html>
 <head>
@@ -87,7 +19,11 @@ html_content = f"""
 <div id="education" style="display:none;">
   <label for="edu">Select Education Attainment:</label>
   <select id="edu" onchange="populateCategories()">
-    {''.join([f'<option value="{edu}">{edu}</option>' for edu in js_data])}
+    <option value="No formal educational credential">No formal educational credential</option>
+    <option value="High school diploma or equivalent">High school diploma or equivalent</option>
+    <option value="Postsecondary nondegree award">Postsecondary nondegree award</option>
+    <option value="Associate's degree">Associate's degree</option>
+    <option value="Bachelor's degree">Bachelor's degree</option>
   </select>
   <button onclick="goToPage('intro')">Back</button>
   <button onclick="goToPage('category')">Continue</button>
@@ -121,36 +57,36 @@ html_content = f"""
 </div>
 
 <script>
-let jobData = {json.dumps(js_data)};
-function goToPage(id) {{
+let jobData = {}; // to be filled with your JSON job data structure
+function goToPage(id) {
   ['intro','education','category','jobs','conclusion'].forEach(p => document.getElementById(p).style.display = 'none');
   document.getElementById(id).style.display = 'block';
-}}
+}
 
-function populateCategories() {{
+function populateCategories() {
   let edu = document.getElementById('edu').value;
   let cat = document.getElementById('cat');
   cat.innerHTML = '';
-  Object.keys(jobData[edu]).forEach(c => {{
+  Object.keys(jobData[edu]).forEach(c => {
     let opt = document.createElement('option');
     opt.value = c;
     opt.innerText = c;
     cat.appendChild(opt);
-  }});
-}}
+  });
+}
 
-function showJobs() {{
+function showJobs() {
   let edu = document.getElementById('edu').value;
   let cat = document.getElementById('cat').value;
   let tableBody = document.getElementById('jobTable').querySelector('tbody');
   tableBody.innerHTML = '';
-  jobData[edu][cat].forEach(job => {{
+  jobData[edu][cat].forEach(job => {
     let row = document.createElement('tr');
-    row.innerHTML = `<td>${{job['Occupation']}}</td><td>${{job['Annual Wage']}}</td><td>${{job['Employment']}}</td><td>${{job['Afford(I/O)'].toFixed(2)}}</td>`;
+    row.innerHTML = `<td>${job['Occupation']}</td><td>${job['Annual Wage']}</td><td>${job['Employment']}</td><td>${job['Afford(I/O)'].toFixed(2)}</td>`;
     tableBody.appendChild(row);
-  }});
+  });
   goToPage('jobs');
-}}
+}
 </script>
 
 </body>
