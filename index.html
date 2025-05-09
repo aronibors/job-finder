@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Full Job Finder</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .page { display: none; }
+    .visible { display: block; }
+    select, button { margin-top: 10px; padding: 5px; width: 300px; }
+    table { margin-top: 20px; border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+  </style>
+</head>
+<body>
+
+<div id="page1" class="page visible">
+  <h2>Step 1: Select Education Level</h2>
+  <select id="eduSelect">
+    <option value="">-- Select --</option>
+    <option value="No formal educational">No Education</option>
+    <option value="High School">High School</option>
+    <option value="Post-Secondary">Post-Secondary (No Degree)</option>
+    <option value="Associate">Associate</option>
+    <option value="Bachelor's">Bachelor's</option>
+  </select><br>
+  <button onclick="goToPage(2)">Continue</button>
+</div>
+
+<div id="page2" class="page">
+  <h2>Step 2: Select Job Category</h2>
+  <select id="catSelect"></select><br>
+  <button onclick="goToPage(3)">Continue</button>
+</div>
+
+<div id="page3" class="page">
+  <h2>Step 3: Matching Jobs</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Job Title</th>
+        <th>Annual Wage</th>
+        <th>Affordability Index</th>
+        <th>Openings</th>
+      </tr>
+    </thead>
+    <tbody id="jobTable"></tbody>
+  </table>
+</div>
+
+<script>
+const jobData = {
+  "No formal educational": {
+    "Artists and Custodians": [
+      { job: "Janitor", wage: 42742, afford: 14.2, openings: 1000 },
+      { job: "Drywaller", wage: 50100, afford: 16.3, openings: 200 },
+      { job: "Plasterer", wage: 48900, afford: 15.9, openings: 150 },
+      { job: "Building Cleaner", wage: 39500, afford: 13.2, openings: 600 },
+      { job: "Craft Artist", wage: 41000, afford: 13.7, openings: 90 }
+    ]
+  },
+  "High School": {
+    "Sales and Services": [
+      { job: "Sales Representative", wage: 52000, afford: 18.5, openings: 800 },
+      { job: "Real Estate Agent", wage: 58000, afford: 20.2, openings: 400 },
+      { job: "Flight Attendant", wage: 56000, afford: 19.7, openings: 300 },
+      { job: "Insurance Sales Agent", wage: 59000, afford: 20.6, openings: 500 },
+      { job: "Media/Comm Worker", wage: 62000, afford: 21.8, openings: 250 },
+      { job: "Mail Carrier", wage: 57000, afford: 19.4, openings: 350 }
+    ],
+    "Construction and Technicians": [
+      { job: "Construction Laborer", wage: 62176, afford: 20.7, openings: 300 },
+      { job: "Roofers", wage: 52000, afford: 17.4, openings: 220 },
+      { job: "Police Officer", wage: 68000, afford: 23.8, openings: 450 },
+      { job: "Rigger", wage: 58000, afford: 20.2, openings: 110 },
+      { job: "Refinery Worker", wage: 69000, afford: 24.5, openings: 140 },
+      { job: "Oil Pump Operator", wage: 63000, afford: 22.3, openings: 100 },
+      { job: "Electrician", wage: 68000, afford: 24.8, openings: 500 },
+      { job: "Elevator Installer", wage: 85000, afford: 31.2, openings: 120 },
+      { job: "Transportation Inspector", wage: 71000, afford: 26.4, openings: 180 },
+      { job: "Millwright", wage: 67000, afford: 25.1, openings: 130 },
+      { job: "Gas Plant Operator", wage: 69000, afford: 25.8, openings: 90 }
+    ]
+  },
+  "Post-Secondary": {
+    "Fire/Electronics/Avionics": [
+      { job: "Firefighter", wage: 70000, afford: 25.6, openings: 300 },
+      { job: "Sound Engineer", wage: 74000, afford: 26.8, openings: 100 },
+      { job: "Lighting Technician", wage: 65000, afford: 23.5, openings: 70 },
+      { job: "Industrial Electronics Repair", wage: 72000, afford: 26.1, openings: 180 },
+      { job: "Fire Supervisor", wage: 78000, afford: 28.3, openings: 60 },
+      { job: "Avionics Technician", wage: 75000, afford: 27.5, openings: 100 },
+      { job: "Power Station Repair", wage: 77000, afford: 29.1, openings: 75 },
+      { job: "Ship Engineer", wage: 80000, afford: 30.4, openings: 90 }
+    ]
+  },
+  "Associate": {
+    "Assistants and Technicians": [
+      { job: "Radiologic Technologist", wage: 94866, afford: 31.6, openings: 150 },
+      { job: "Paralegal", wage: 65000, afford: 22.8, openings: 200 },
+      { job: "Dental Hygienist", wage: 72000, afford: 25.4, openings: 180 },
+      { job: "Broadcast Technician", wage: 66000, afford: 23.7, openings: 100 },
+      { job: "Vet Technician", wage: 62000, afford: 22.3, openings: 90 },
+      { job: "OT Assistant", wage: 70000, afford: 25.8, openings: 80 },
+      { job: "Industrial Engineering Tech", wage: 75000, afford: 27.2, openings: 95 },
+      { job: "Food Science Tech", wage: 67000, afford: 24.2, openings: 75 },
+      { job: "Radiation Therapist", wage: 87000, afford: 30.1, openings: 60 }
+    ]
+  },
+  "Bachelor's": {
+    "Bachelor's - Research, Teachers, Creative, Agents": [
+      { job: "Market Research Analyst", wage: 99384, afford: 33.1, openings: 200 },
+      { job: "Graphic Designer", wage: 67000, afford: 22.3, openings: 120 },
+      { job: "Agent/Manager", wage: 82000, afford: 27.3, openings: 90 },
+      { job: "Kindergarten Teacher", wage: 68000, afford: 22.6, openings: 150 },
+      { job: "Middle School Teacher", wage: 72000, afford: 25.0, openings: 160 },
+      { job: "High School Teacher", wage: 85000, afford: 28.3, openings: 500 },
+      { job: "Environmental Scientist", wage: 90000, afford: 30.4, openings: 80 },
+      { job: "Research Analyst", wage: 96000, afford: 32.5, openings: 60 },
+      { job: "Public Relations Specialist", wage: 82000, afford: 27.4, openings: 110 }
+    ]
+  }
+};
+
+function goToPage(n) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("visible"));
+
+  if (n === 2) {
+    const edu = document.getElementById("eduSelect").value;
+    const catSelect = document.getElementById("catSelect");
+    catSelect.innerHTML = "";
+    if (!jobData[edu]) return;
+
+    Object.keys(jobData[edu]).forEach(cat => {
+      const opt = document.createElement("option");
+      opt.value = cat;
+      opt.text = cat;
+      catSelect.add(opt);
+    });
+  }
+
+  if (n === 3) {
+    const edu = document.getElementById("eduSelect").value;
+    const cat = document.getElementById("catSelect").value;
+    const jobTable = document.getElementById("jobTable");
+    jobTable.innerHTML = "";
+
+    if (jobData[edu] && jobData[edu][cat]) {
+      jobData[edu][cat].forEach(job => {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${job.job}</td><td>$${job.wage.toLocaleString()}</td><td>${job.afford}</td><td>${job.openings}</td>`;
+        jobTable.appendChild(row);
+      });
+    }
+  }
+
+  document.getElementById(`page${n}`).classList.add("visible");
+}
+</script>
+</body>
+</html>
