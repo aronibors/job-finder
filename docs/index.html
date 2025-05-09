@@ -2,56 +2,61 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Job Finder (Offline)</title>
+  <title>Interactive Job Finder</title>
 </head>
 <body>
 
 <div id="intro" style="display:block;">
   <p>
-    First click Educational attainment, <br><br>
-    Second click the desired job category in the chosen educational attainment, <br><br>
-    Third it will show the job names in said category, their annual wage before taxes, and affordability index (annual wage/monthly rent), <br><br>
-    Fourth and final, the Google spreadsheet which the data was gathered from, with all the jobs, wages, employment availability, and affordability index will be available for download.
+    First click Educational attainment. <br><br>
+    Secondly, click the desired job category in the chosen educational attainment. <br><br>
+    Thirdly, it will show the job names in said category, their annual wage before taxes, and affordability index (annual wage/monthly rent). <br><br>
+    Fourth and finally, the Google spreadsheet which the data was gathered from, with all the jobs, wages, employment availability, and affordability index will be available for download.
   </p>
   <button onclick="goToPage('education')">Continue</button>
 </div>
 
 <div id="education" style="display:none;">
-  <label for="edu">Select Education Attainment:</label>
+  <h2>Select Your Educational Attainment</h2>
   <select id="edu" onchange="populateCategories()">
+    <option value="" disabled selected>Choose an education level</option>
     <option value="No formal educational credential">No formal educational credential</option>
     <option value="High school diploma or equivalent">High school diploma or equivalent</option>
     <option value="Postsecondary nondegree award">Postsecondary nondegree award</option>
     <option value="Associate's degree">Associate's degree</option>
     <option value="Bachelor's degree">Bachelor's degree</option>
   </select>
+  <br><br>
   <button onclick="goToPage('intro')">Back</button>
   <button onclick="goToPage('category')">Continue</button>
 </div>
 
 <div id="category" style="display:none;">
-  <label for="cat">Select Job Category:</label>
+  <h2>Select a Job Category</h2>
   <select id="cat"></select>
+  <br><br>
   <button onclick="goToPage('education')">Back</button>
   <button onclick="showJobs()">Continue</button>
 </div>
 
 <div id="jobs" style="display:none;">
-  <h3>Jobs Available:</h3>
+  <h2>Job Listings</h2>
   <table border="1" id="jobTable">
     <thead>
-      <tr><th>Occupation</th><th>Annual Wage ($)</th><th>Employment</th><th>Affordability Index</th></tr>
+      <tr><th>Occupation</th><th>Employment</th><th>Annual Wage ($)</th><th>Affordability Index</th></tr>
     </thead>
     <tbody></tbody>
   </table>
+  <br><br>
   <button onclick="goToPage('category')">Back</button>
   <button onclick="goToPage('conclusion')">Continue</button>
 </div>
 
 <div id="conclusion" style="display:none;">
-  <p>This concludes the list of jobs by educational level and affordability.</p>
-  <p>You can download the full dataset in Excel format below:</p>
-  <a href="docs/Optimization_Data_Education_Jobs.xlsx" download>📄 Download Full Job Dataset (Excel)</a><br><br>
+  <h2>Conclusion</h2>
+  <p>You can download the full Google spreadsheet with all jobs, wages, openings, and affordability index below:</p>
+  <a href="https://docs.google.com/spreadsheets/d/19ziRp1iNENdopAgHci7nJTNzTbgiFV1xRYE2QhjCgq0/edit?usp=sharing" target="_blank">📄 View Google Sheet</a>
+  <br><br>
   <button onclick="goToPage('jobs')">Back</button>
   <button onclick="window.close()">Exit</button>
 </div>
@@ -59,48 +64,62 @@
 <script>
 let jobData = {
   "No formal educational credential": {
-    "artist": [{"Occupation":"Artists and Related Workers, All Other","Annual Wage":117810,"Employment":300,"Afford(I/O)":39.31},{"Occupation":"Models","Annual Wage":120619,"Employment":430,"Afford(I/O)":40.24}],
-    "custodian": [{"Occupation":"Janitors and Cleaners, Except Maids and Housekeeping Cleaners","Annual Wage":42742,"Employment":60960,"Afford(I/O)":14.26}]
+    "artist": [
+      {"Occupation":"Artists and Related Workers, All Other","Employment":400,"Annual Wage":117810,"Affordability Index":39.31},
+      {"Occupation":"Models","Employment":270,"Annual Wage":120619,"Affordability Index":40.24},
+      {"Occupation":"Craft Artists","Employment":230,"Annual Wage":108234,"Affordability Index":36.11}
+    ],
+    "custodian": [
+      {"Occupation":"Janitors and Cleaners, Except Maids and Housekeeping Cleaners","Employment":24000,"Annual Wage":40200,"Affordability Index":25.2}
+    ]
   },
   "High school diploma or equivalent": {
-    "sales": [{"Occupation":"Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products","Annual Wage":82237,"Employment":45670,"Afford(I/O)":27.44}],
-    "construction": [{"Occupation":"Elevator and Escalator Installers and Repairers","Annual Wage":109731,"Employment":720,"Afford(I/O)":36.56}],
-    "supply-chain": [{"Occupation":"Postal Service Mail Carriers","Annual Wage":58498,"Employment":7080,"Afford(I/O)":19.49}]
+    "sales": [
+      {"Occupation":"Sales Representatives, Wholesale and Manufacturing","Employment":12000,"Annual Wage":63000,"Affordability Index":30.1}
+    ],
+    "construction": [],
+    "supply-chain": []
   },
   "Postsecondary nondegree award": {
-    "construction": [{"Occupation":"First-Line Supervisors of Construction Trades and Extraction Workers","Annual Wage":87498,"Employment":7010,"Afford(I/O)":29.16}],
-    "industrial": [{"Occupation":"Stationary Engineers and Boiler Operators","Annual Wage":82383,"Employment":370,"Afford(I/O)":27.43}],
-    "technician": [{"Occupation":"Avionics Technicians","Annual Wage":90000,"Employment":120,"Afford(I/O)":30.02}]
+    "construction": [],
+    "industrial": [],
+    "technician": []
   },
   "Associate's degree": {
-    "assistant for doctor": [{"Occupation":"Radiologic Technologists","Annual Wage":92566,"Employment":4460,"Afford(I/O)":30.88}],
-    "lawyer": [{"Occupation":"Paralegals and Legal Assistants","Annual Wage":72304,"Employment":10300,"Afford(I/O)":24.11}],
-    "engineer technician": [{"Occupation":"Broadcast Technicians","Annual Wage":84432,"Employment":280,"Afford(I/O)":28.16}]
+    "assistant for doctor": [],
+    "legal assistant": [],
+    "engineer technician": []
   },
   "Bachelor's degree": {
-    "research": [{"Occupation":"Medical Scientists, Except Epidemiologists","Annual Wage":111488,"Employment":3970,"Afford(I/O)":37.19}],
-    "K12 educator/worker": [{"Occupation":"Elementary School Teachers, Except Special Education","Annual Wage":85344,"Employment":23000,"Afford(I/O)":28.45}],
-    "marketing": [{"Occupation":"Market Research Analysts and Marketing Specialists","Annual Wage":90663,"Employment":17290,"Afford(I/O)":30.25}],
-    "agents": [{"Occupation":"Public Relations Specialists","Annual Wage":83154,"Employment":3480,"Afford(I/O)":27.74}],
-    "scientists": [{"Occupation":"Chemists","Annual Wage":101865,"Employment":380,"Afford(I/O)":34.47}]
+    "research": [],
+    "K12 educator/worker": [],
+    "marketing": [],
+    "agents": [],
+    "scientists": []
   }
 };
 
 function goToPage(id) {
-  ['intro','education','category','jobs','conclusion'].forEach(p => document.getElementById(p).style.display = 'none');
-  document.getElementById(id).style.display = 'block';
+  ['intro','education','category','jobs','conclusion'].forEach(p => {
+    let el = document.getElementById(p);
+    if (el) el.style.display = 'none';
+  });
+  let target = document.getElementById(id);
+  if (target) target.style.display = 'block';
 }
 
 function populateCategories() {
   let edu = document.getElementById('edu').value;
-  let cat = document.getElementById('cat');
-  cat.innerHTML = '';
-  Object.keys(jobData[edu]).forEach(c => {
-    let opt = document.createElement('option');
-    opt.value = c;
-    opt.innerText = c;
-    cat.appendChild(opt);
-  });
+  let catSelect = document.getElementById('cat');
+  catSelect.innerHTML = '';
+  if (edu in jobData) {
+    for (let cat in jobData[edu]) {
+      let opt = document.createElement('option');
+      opt.value = cat;
+      opt.innerText = cat;
+      catSelect.appendChild(opt);
+    }
+  }
 }
 
 function showJobs() {
@@ -108,11 +127,18 @@ function showJobs() {
   let cat = document.getElementById('cat').value;
   let tableBody = document.getElementById('jobTable').querySelector('tbody');
   tableBody.innerHTML = '';
-  jobData[edu][cat].forEach(job => {
-    let row = document.createElement('tr');
-    row.innerHTML = `<td>${job['Occupation']}</td><td>${job['Annual Wage']}</td><td>${job['Employment']}</td><td>${job['Afford(I/O)'].toFixed(2)}</td>`;
-    tableBody.appendChild(row);
-  });
+  if (edu in jobData && cat in jobData[edu]) {
+    jobData[edu][cat].forEach(job => {
+      let row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${job['Occupation']}</td>
+        <td>${job['Employment']}</td>
+        <td>${job['Annual Wage']}</td>
+        <td>${job['Affordability Index']}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  }
   goToPage('jobs');
 }
 </script>
