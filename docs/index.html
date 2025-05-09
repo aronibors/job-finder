@@ -57,7 +57,35 @@
 </div>
 
 <script>
-let jobData = {}; // to be filled with your JSON job data structure
+let jobData = {
+  "No formal educational credential": {
+    "artist": [{"Occupation":"Artists and Related Workers, All Other","Annual Wage":117810,"Employment":300,"Afford(I/O)":39.31},{"Occupation":"Models","Annual Wage":120619,"Employment":430,"Afford(I/O)":40.24}],
+    "custodian": [{"Occupation":"Janitors and Cleaners, Except Maids and Housekeeping Cleaners","Annual Wage":42742,"Employment":60960,"Afford(I/O)":14.26}]
+  },
+  "High school diploma or equivalent": {
+    "sales": [{"Occupation":"Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products","Annual Wage":82237,"Employment":45670,"Afford(I/O)":27.44}],
+    "construction": [{"Occupation":"Elevator and Escalator Installers and Repairers","Annual Wage":109731,"Employment":720,"Afford(I/O)":36.56}],
+    "supply-chain": [{"Occupation":"Postal Service Mail Carriers","Annual Wage":58498,"Employment":7080,"Afford(I/O)":19.49}]
+  },
+  "Postsecondary nondegree award": {
+    "construction": [{"Occupation":"First-Line Supervisors of Construction Trades and Extraction Workers","Annual Wage":87498,"Employment":7010,"Afford(I/O)":29.16}],
+    "industrial": [{"Occupation":"Stationary Engineers and Boiler Operators","Annual Wage":82383,"Employment":370,"Afford(I/O)":27.43}],
+    "technician": [{"Occupation":"Avionics Technicians","Annual Wage":90000,"Employment":120,"Afford(I/O)":30.02}]
+  },
+  "Associate's degree": {
+    "assistant for doctor": [{"Occupation":"Radiologic Technologists","Annual Wage":92566,"Employment":4460,"Afford(I/O)":30.88}],
+    "lawyer": [{"Occupation":"Paralegals and Legal Assistants","Annual Wage":72304,"Employment":10300,"Afford(I/O)":24.11}],
+    "engineer technician": [{"Occupation":"Broadcast Technicians","Annual Wage":84432,"Employment":280,"Afford(I/O)":28.16}]
+  },
+  "Bachelor's degree": {
+    "research": [{"Occupation":"Medical Scientists, Except Epidemiologists","Annual Wage":111488,"Employment":3970,"Afford(I/O)":37.19}],
+    "K12 educator/worker": [{"Occupation":"Elementary School Teachers, Except Special Education","Annual Wage":85344,"Employment":23000,"Afford(I/O)":28.45}],
+    "marketing": [{"Occupation":"Market Research Analysts and Marketing Specialists","Annual Wage":90663,"Employment":17290,"Afford(I/O)":30.25}],
+    "agents": [{"Occupation":"Public Relations Specialists","Annual Wage":83154,"Employment":3480,"Afford(I/O)":27.74}],
+    "scientists": [{"Occupation":"Chemists","Annual Wage":101865,"Employment":380,"Afford(I/O)":34.47}]
+  }
+};
+
 function goToPage(id) {
   ['intro','education','category','jobs','conclusion'].forEach(p => document.getElementById(p).style.display = 'none');
   document.getElementById(id).style.display = 'block';
