@@ -22,7 +22,7 @@
   <p>First click <strong>Educational attainment</strong>.</p>
   <p>Secondly, click the desired job category in the chosen educational attainment.</p>
   <p>Thirdly, it will show the job names in said category, their annual wage before taxes, and affordability index (annual wage/monthly rent).</p>
-  <p>Fourth and finally, the Google spreadsheet which the data was gathered from, with all the jobs, wages, employment availability, and affordability index will be available for download.</p>
+  <p>Fourth and finally, the Google spreadsheet which the data was gathered from will be available for download.</p>
   <a href="#step2"><button>Continue</button></a>
 </section>
 
@@ -83,8 +83,23 @@
 </section>
 
 <script>
-  const data = /* ... your data object here ... */ {};
-  const catMap = /* ... your category mapping here ... */ {};
+  // Job data (populate with your actual data)
+  const data = {
+    "No formal educational credential": { "artist": [], "custodian": [] },
+    "High school diploma or equivalent": { "construction": [], "supply-chain": [], "sales": [] },
+    "Postsecondary nondegree award": { "construction": [], "industrial": [], "technician": [] },
+    "Associate's degree": { "assistant for doctor": [], "lawyer": [], "engineer technician": [] },
+    "Bachelor's degree": { "research": [], "k12 educator/worker": [], "marketing/business": [], "cinematography": [], "scientists": [] }
+  };
+
+  // Category mapping
+  const catMap = {
+    "No formal educational credential": ["artist", "custodian"],
+    "High school diploma or equivalent": ["construction", "supply-chain", "sales"],
+    "Postsecondary nondegree award": ["construction", "industrial", "technician"],
+    "Associate's degree": ["assistant for doctor", "lawyer", "engineer technician"],
+    "Bachelor's degree": ["research", "k12 educator/worker", "marketing/business", "cinematography", "scientists"]
+  };
 
   function populateCategory() {
     const edu = document.getElementById('eduSelect').value;
@@ -108,9 +123,9 @@
     if (edu && cat && data[edu][cat]) {
       data[edu][cat].forEach(job => {
         const row = document.createElement('tr');
-        ['Occupation', 'Employment', 'Annual Wage', 'Afford(I/O)'].forEach(key => {
+        ['Occupation', 'Employment', 'Annual Wage', 'Affordability Index'].forEach(key => {
           const cell = document.createElement('td');
-          cell.textContent = job[key];
+          cell.textContent = job[key] || '';
           row.appendChild(cell);
         });
         tbody.appendChild(row);
