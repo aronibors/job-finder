@@ -1,13 +1,36 @@
-full_job_json = json.dumps(multi_page_jobs)
+ Format all numerical values with commas for readability
+for edu in multi_page_filtered_jobs:
+    for cat in multi_page_filtered_jobs[edu]:
+        for job in multi_page_filtered_jobs[edu][cat]:
+            job['Annual Wage'] = f"${job['Annual Wage']:,}"
+            job['Employment'] = f"{job['Employment']:,}"
+            job['Affordability Index'] = f"{job['Affordability Index']}"
 
-# Create full final HTML with all job data and correct navigation flow
-html_all_jobs_path = "/mnt/data/job_finder_all_jobs_doctype.html"
-with open(html_all_jobs_path, "w") as f:
+# Convert to JSON for embedding in the HTML
+json_formatted_jobs = json.dumps(multi_page_filtered_jobs)
+
+# Save the improved HTML
+html_formatted_path = "/mnt/data/job_finder_formatted_comma_doctype.html"
+with open(html_formatted_path, "w") as f:
     f.write(f"""<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Step-by-Step Job Finder</title>
+  <title>Job Finder - Comma Format</title>
+  <style>
+    table {{
+      border-collapse: collapse;
+      width: 90%;
+    }}
+    th, td {{
+      border: 1px solid #000;
+      padding: 8px 12px;
+      text-align: left;
+    }}
+    th {{
+      background-color: #f2f2f2;
+    }}
+  </style>
 </head>
 <body>
 
@@ -25,7 +48,7 @@ with open(html_all_jobs_path, "w") as f:
   <h2>Step 1: Choose Education Level</h2>
   <select id="edu" onchange="populateCategories()">
     <option value="" disabled selected>Choose an education level</option>
-    {''.join([f'<option value="{edu}">{edu}</option>' for edu in multi_page_jobs])}
+    {''.join([f'<option value="{edu}">{edu}</option>' for edu in multi_page_filtered_jobs])}
   </select><br><br>
   <button onclick="goToPage('intro')">Back</button>
   <button onclick="goToPage('category')">Continue</button>
@@ -40,8 +63,10 @@ with open(html_all_jobs_path, "w") as f:
 
 <div id="jobs" style="display:none;">
   <h2>Step 3: Job Listings</h2>
-  <table border="1" id="jobTable">
-    <thead><tr><th>Occupation</th><th>Employment</th><th>Annual Wage ($)</th><th>Affordability Index</th></tr></thead>
+  <table id="jobTable">
+    <thead>
+      <tr><th>Occupation</th><th>Employment</th><th>Annual Wage</th><th>Affordability Index</th></tr>
+    </thead>
     <tbody></tbody>
   </table><br>
   <button onclick="goToPage('category')">Back</button>
@@ -60,7 +85,7 @@ with open(html_all_jobs_path, "w") as f:
 </div>
 
 <script>
-let jobData = {full_job_json};
+let jobData = {json_formatted_jobs};
 
 function goToPage(id) {{
   ['intro','education','category','jobs','conclusion'].forEach(p => {{
@@ -102,6 +127,3 @@ function showJobs() {{
 
 </body>
 </html>
-""")
-
-html_all_jobs_path
