@@ -1,18 +1,4 @@
- Format all numerical values with commas for readability
-for edu in multi_page_filtered_jobs:
-    for cat in multi_page_filtered_jobs[edu]:
-        for job in multi_page_filtered_jobs[edu][cat]:
-            job['Annual Wage'] = f"${job['Annual Wage']:,}"
-            job['Employment'] = f"{job['Employment']:,}"
-            job['Affordability Index'] = f"{job['Affordability Index']}"
-
-# Convert to JSON for embedding in the HTML
-json_formatted_jobs = json.dumps(multi_page_filtered_jobs)
-
-# Save the improved HTML
-html_formatted_path = "/mnt/data/job_finder_formatted_comma_doctype.html"
-with open(html_formatted_path, "w") as f:
-    f.write(f"""<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
