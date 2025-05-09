@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Job Finder - Comma Format</title>
+  <title>Job Finder</title>
   <style>
     table {{
       border-collapse: collapse;
@@ -34,7 +34,7 @@
   <h2>Step 1: Choose Education Level</h2>
   <select id="edu" onchange="populateCategories()">
     <option value="" disabled selected>Choose an education level</option>
-    {''.join([f'<option value="{edu}">{edu}</option>' for edu in multi_page_filtered_jobs])}
+    {''.join([f'<option value="{edu}">{edu}</option>' for edu in formatted_jobs_data])}
   </select><br><br>
   <button onclick="goToPage('intro')">Back</button>
   <button onclick="goToPage('category')">Continue</button>
@@ -71,7 +71,7 @@
 </div>
 
 <script>
-let jobData = {json_formatted_jobs};
+let jobData = {formatted_json};
 
 function goToPage(id) {{
   ['intro','education','category','jobs','conclusion'].forEach(p => {{
