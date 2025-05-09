@@ -6,7 +6,6 @@
   <style>
     section { display: none; }
     section:target { display: block; }
-    body:not(:has(:target)) #step1 { display: block; }
 
     body {
       font-family: Arial, sans-serif;
@@ -104,6 +103,12 @@
 
 <script>
 // JOB DATA STARTS HERE
+window.onload = function () {
+    if (!location.hash) {
+      location.hash = "#step1";
+    }
+  };
+</script>
 const catMap = {
   "No formal educational credential": ["artist", "custodian"],
   "High school diploma or equivalent": ["construction", "supply-chain", "sales"],
