@@ -27,7 +27,7 @@
     Thirdly, it will show the job names in said category, their annual wage before taxes, and affordability index (annual wage/monthly rent). <br><br>
     Fourth and finally, the google spreadsheet which the data was gathered from, with all the jobs, wages, employment availability, and affordability index will be available for download.
   </p>
-  <button id="toEducation">Continue</button>
+  <button onclick="goToPage('education')">Continue</button>
 </div>
 
 <div id="education" style="display:none;">
@@ -36,15 +36,15 @@
     <option value="" disabled selected>Choose an education level</option>
     {''.join([f'<option value="{edu}">{edu}</option>' for edu in formatted_jobs_data])}
   </select><br><br>
-  <button id="backToIntro">Back</button>
-  <button id="toCategory">Continue</button>
+  <button onclick="goToPage('intro')">Back</button>
+  <button onclick="goToPage('category')">Continue</button>
 </div>
 
 <div id="category" style="display:none;">
   <h2>Step 2: Choose Job Category</h2>
   <select id="cat"></select><br><br>
-  <button id="backToEducation">Back</button>
-  <button id="toJobs">Continue</button>
+  <button onclick="goToPage('education')">Back</button>
+  <button onclick="showJobs()">Continue</button>
 </div>
 
 <div id="jobs" style="display:none;">
@@ -55,8 +55,8 @@
     </thead>
     <tbody></tbody>
   </table><br>
-  <button id="backToCategory">Back</button>
-  <button id="toConclusion">Continue</button>
+  <button onclick="goToPage('category')">Back</button>
+  <button onclick="goToPage('conclusion')">Continue</button>
 </div>
 
 <div id="conclusion" style="display:none;">
@@ -66,28 +66,19 @@
   </p>
   <a href="https://docs.google.com/spreadsheets/d/19ziRp1iNENdopAgHci7nJTNzTbgiFV1xRYE2QhjCgq0/edit?usp=sharing" target="_blank">📄 Google Sheet</a>
   <br><br>
-  <button id="backToJobs">Back</button>
+  <button onclick="goToPage('jobs')">Back</button>
   <button onclick="window.close()">Exit</button>
 </div>
 
 <script>
-let jobData = {formatted_json_clean};
+let jobData = {inline_json};
 
-function showPage(id) {{
+function goToPage(id) {{
   ['intro','education','category','jobs','conclusion'].forEach(p => {{
     document.getElementById(p).style.display = 'none';
   }});
   document.getElementById(id).style.display = 'block';
 }}
-
-document.getElementById("toEducation").addEventListener("click", () => showPage("education"));
-document.getElementById("backToIntro").addEventListener("click", () => showPage("intro"));
-document.getElementById("toCategory").addEventListener("click", () => showPage("category"));
-document.getElementById("backToEducation").addEventListener("click", () => showPage("education"));
-document.getElementById("toJobs").addEventListener("click", showJobs);
-document.getElementById("backToCategory").addEventListener("click", () => showPage("category"));
-document.getElementById("toConclusion").addEventListener("click", () => showPage("conclusion"));
-document.getElementById("backToJobs").addEventListener("click", () => showPage("jobs"));
 
 function populateCategories() {{
   let edu = document.getElementById("edu").value;
@@ -115,7 +106,7 @@ function showJobs() {{
       tbody.appendChild(row);
     }});
   }}
-  showPage('jobs');
+  goToPage('jobs');
 }}
 </script>
 
