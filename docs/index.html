@@ -2,113 +2,93 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Job Finder</title>
+  <title>Static Job Finder</title>
   <style>
-    table {{
+    section { display: none; }
+    section:target { display: block; }
+    #intro { display: block; }
+    table {
       border-collapse: collapse;
-      width: 90%;
-    }}
-    th, td {{
-      border: 1px solid #000;
-      padding: 8px 12px;
+      width: 98%;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px 10px;
       text-align: left;
-    }}
-    th {{
-      background-color: #f2f2f2;
-    }}
+    }
+    th {
+      background-color: #eee;
+    }
+    button {
+      padding: 8px 12px;
+      margin: 10px 5px;
+    }
   </style>
 </head>
 <body>
 
-<div id="intro" style="display:block;">
-  <p>
-    First click Educational attainment. <br><br>
-    Secondly, click the desired job category in the chosen educational attainment. <br><br>
-    Thirdly, it will show the job names in said category, their annual wage before taxes, and affordability index (annual wage/monthly rent). <br><br>
-    Fourth and finally, the google spreadsheet which the data was gathered from, with all the jobs, wages, employment availability, and affordability index will be available for download.
-  </p>
-  <button onclick="goToPage('education')">Continue</button>
-</div>
+<section id="intro">
+  <h1>Intro Page</h1>
+  <p>First click Educational attainment.</p>
+  <p>Secondly, click the desired job category in the chosen educational attainment.</p>
+  <p>Thirdly, it will show the job names in said category, their annual wage before taxes, and affordability index (annual wage/monthly rent).</p>
+  <p>Fourth and finally, the Google spreadsheet which the data was gathered from, with all the jobs, wages, employment availability, and affordability index will be available for download.</p>
+  <a href="#education"><button>Continue</button></a>
+</section>
 
-<div id="education" style="display:none;">
-  <h2>Step 1: Choose Education Level</h2>
-  <select id="edu" onchange="populateCategories()">
-    <option value="" disabled selected>Choose an education level</option>
-    {''.join([f'<option value="{edu}">{edu}</option>' for edu in formatted_jobs_data])}
-  </select><br><br>
-  <button onclick="goToPage('intro')">Back</button>
-  <button onclick="goToPage('category')">Continue</button>
-</div>
+<section id="education" style="display:none;">
+  <h2>Step 1: Choose Educational Attainment</h2>
+  <ul>
+"""
 
-<div id="category" style="display:none;">
-  <h2>Step 2: Choose Job Category</h2>
-  <select id="cat"></select><br><br>
-  <button onclick="goToPage('education')">Back</button>
-  <button onclick="showJobs()">Continue</button>
-</div>
+# Education links
+for i, edu in enumerate(structured_jobs.keys()):
+    html_output += f'    <li><a href="#edu{i}">{edu}</a></li>\n'
 
-<div id="jobs" style="display:none;">
-  <h2>Step 3: Job Listings</h2>
-  <table id="jobTable">
-    <thead>
-      <tr><th>Occupation</th><th>Employment</th><th>Annual Wage</th><th>Affordability Index</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table><br>
-  <button onclick="goToPage('category')">Back</button>
-  <button onclick="goToPage('conclusion')">Continue</button>
-</div>
+html_output += """  </ul>
+  <a href="#intro"><button>Back</button></a>
+</section>
+"""
 
-<div id="conclusion" style="display:none;">
-  <h2>Step 4: Download Data</h2>
-  <p>
-    Download the full spreadsheet containing all job listings, wages, employment data, and affordability index:
-  </p>
-  <a href="https://docs.google.com/spreadsheets/d/19ziRp1iNENdopAgHci7nJTNzTbgiFV1xRYE2QhjCgq0/edit?usp=sharing" target="_blank">📄 Google Sheet</a>
+# Build education → category pages
+edu_id_map = {}
+for edu_index, (edu, categories) in enumerate(structured_jobs.items()):
+    edu_id = f"edu{edu_index}"
+    html_output += f'<section id="{edu_id}" style="display:none;">\n'
+    html_output += f'<h2>{edu}</h2>\n<ul>\n'
+    for cat in categories:
+        cat_id = f"{edu_id}_{cat.replace(' ', '_')}"
+        html_output += f'<li><a href="#{cat_id}">{cat.title()}</a></li>\n'
+    html_output += '</ul>\n'
+    html_output += f'<a href="#education"><button>Back</button></a>\n</section>\n'
+    edu_id_map[edu] = edu_id
+
+# Category pages with job tables
+for edu, categories in structured_jobs.items():
+    for cat, jobs in categories.items():
+        cat_id = f"{edu_id_map[edu]}_{cat.replace(' ', '_')}"
+        html_output += f'<section id="{cat_id}" style="display:none;">\n'
+        html_output += f'<h2>{edu} - {cat.title()}</h2>\n<table>\n<tr><th>Occupation</th><th>Employment</th><th>Annual Wage</th><th>Affordability Index</th></tr>\n'
+        for job in jobs:
+            html_output += f"<tr><td>{job['Occupation']}</td><td>{job['Employment']}</td><td>{job['Annual Wage']}</td><td>{job['Afford(I/O)']}</td></tr>\n"
+        html_output += "</table>\n"
+        html_output += f'<a href="#{edu_id_map[edu]}"><button>Back</button></a>\n'
+        html_output += '<a href="#conclusion"><button>Continue</button></a>\n'
+        html_output += '</section>\n'
+
+# Final conclusion page
+html_output += """
+<section id="conclusion" style="display:none;">
+  <h2>Conclusion</h2>
+  <p>You can download the complete dataset here:</p>
+  <a href="https://docs.google.com/spreadsheets/d/19ziRp1iNENdopAgHci7nJTNzTbgiFV1xRYE2QhjCgq0/edit?usp=sharing" target="_blank">
+    📄 Download Google Sheet
+  </a>
   <br><br>
-  <button onclick="goToPage('jobs')">Back</button>
+  <a href="#education"><button>Back</button></a>
   <button onclick="window.close()">Exit</button>
-</div>
-
-<script>
-let jobData = {inline_json};
-
-function goToPage(id) {{
-  ['intro','education','category','jobs','conclusion'].forEach(p => {{
-    document.getElementById(p).style.display = 'none';
-  }});
-  document.getElementById(id).style.display = 'block';
-}}
-
-function populateCategories() {{
-  let edu = document.getElementById("edu").value;
-  let cat = document.getElementById("cat");
-  cat.innerHTML = '';
-  if (edu in jobData) {{
-    for (let key in jobData[edu]) {{
-      let option = document.createElement("option");
-      option.value = key;
-      option.innerText = key;
-      cat.appendChild(option);
-    }}
-  }}
-}}
-
-function showJobs() {{
-  let edu = document.getElementById("edu").value;
-  let cat = document.getElementById("cat").value;
-  let tbody = document.getElementById("jobTable").querySelector("tbody");
-  tbody.innerHTML = '';
-  if (edu in jobData && cat in jobData[edu]) {{
-    jobData[edu][cat].forEach(job => {{
-      let row = document.createElement("tr");
-      row.innerHTML = `<td>${{job['Occupation']}}</td><td>${{job['Employment']}}</td><td>${{job['Annual Wage']}}</td><td>${{job['Affordability Index']}}</td>`;
-      tbody.appendChild(row);
-    }});
-  }}
-  goToPage('jobs');
-}}
-</script>
+</section>
 
 </body>
 </html>
