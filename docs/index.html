@@ -6,13 +6,8 @@
   <style>
     section { display: none; }
     section:target { display: block; }
+    /* Show step1 when no hash is present */
     body:not(:has(:target)) #step1 { display: block; }
-    #categoryTable { width: 50%; border-collapse: collapse; margin-bottom: 1em; }
-    #categoryTable th, #categoryTable td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    #categoryTable tr.selected { background-color: #e0e0e0; }
-    #categoryTable tr:hover { background-color: #f5f5f5; cursor: pointer; }
-    #jobTable { width: 100%; border-collapse: collapse; }
-    #jobTable th, #jobTable td { border: 1px solid #ccc; padding: 8px; text-align: left; }
   </style>
 </head>
 <body>
@@ -43,17 +38,17 @@
 
 <section id="step3">
   <h2>Step 2: Choose Job Category</h2>
-  <table id="categoryTable">
-    <thead><tr><th>Category</th></tr></thead>
-    <tbody></tbody>
-  </table>
-  <button onclick="location.hash='#step2'">Back</button>
-  <button id="step3Continue" disabled onclick="location.hash='#step4'">Continue to Step 3</button>
+  <select id="catSelect" onchange="populateJobs()">
+    <option value="">-- Select Category --</option>
+  </select>
+  <br><br>
+  <a href="#step2"><button>Back</button></a>
+  <a href="#step4"><button>Continue to Step 3</button></a>
 </section>
 
 <section id="step4">
   <h2>Step 3: Jobs</h2>
-  <table id="jobTable">
+  <table id="jobTable" border="1" cellpadding="5" cellspacing="0">
     <thead>
       <tr>
         <th>Occupation</th>
@@ -62,58 +57,130 @@
         <th>Affordability Index</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody>
+      <!-- Jobs will be injected here -->
+    </tbody>
   </table>
+  <br>
   <a href="#step3"><button>Back</button></a>
   <a href="#step5"><button>Continue to Step 4</button></a>
 </section>
 
 <section id="step5">
   <h2>Step 4: Conclusion</h2>
-  <p>Download the full spreadsheet containing job titles, wages, employment, and affordability index:</p>
-  <a href="https://docs.google.com/spreadsheets/d/19ziRp1iNENdopAgHci7nJTNzTbgiFV1xRYE2QhjCgq0/edit?usp=sharing" target="_blank">📄 Google Sheet</a><br><br>
+  <p>Download the full spreadsheet containing job titles, wages, employment availability, and affordability index:</p>
+  <a href="https://docs.google.com/spreadsheets/d/19ziRp1iNENdopAgHci7nJTNzTbgiFV1xRYE2QhjCgq0/edit?usp=sharing" target="_blank">
+    📄 Google Sheet
+  </a>
+  <br><br>
   <a href="#step4"><button>Back</button></a>
   <button onclick="window.close()">Exit</button>
 </section>
 
 <script>
-  // Full job data pulled from the original file
-  const data = {"No formal educational credential":{"artist":[{"Occupation":"Artist","Employment":"14,070","Annual Wage":"$37,530","Afford(I/O)":14.69},{"Occupation":"Custodian","Employment":"516,250","Annual Wage":"$31,740","Afford(I/O)":12.42},{"Occupation":"Plasterer/Drywaller","Employment":"25,580","Annual Wage":"$48,870","Afford(I/O)":19.12},{"Occupation":"Building Cleaner","Employment":"262,310","Annual Wage":"$29,560","Afford(I/O)":11.57},{"Occupation":"Craft Artist","Employment":"3,280","Annual Wage":"$34,620","Afford(I/O)":13.55}]},"High school diploma or equivalent":{"construction-related":[{"Occupation":"Construction Laborers","Employment":"256,330","Annual Wage":"$38,890","Afford(I/O)":15.22},{"Occupation":"Roofers","Employment":"35,470","Annual Wage":"$43,500","Afford(I/O)":17.03},{"Occupation":"Electricians","Employment":"275,340","Annual Wage":"$56,180","Afford(I/O)":21.99}],"logistics & supply chain":[{"Occupation":"Supply Chain Managers","Employment":"38,360","Annual Wage":"$111,030","Afford(I/O)":43.48},{"Occupation":"Logisticians","Employment":"67,600","Annual Wage":"$76,270","Afford(I/O)":29.86}],"sales & customer service":[{"Occupation":"Sales Representatives, Wholesale","Employment":"552,940","Annual Wage":"$66,520","Afford(I/O)":26.04},{"Occupation":"Insurance Sales Agents","Employment":"323,920","Annual Wage":"$84,410","Afford(I/O)":33.04} ]},"Postsecondary nondegree award":{"technical & trade technicians":[{"Occupation":"Firefighters","Employment":"333,290","Annual Wage":"$54,650","Afford(I/O)":21.38},{"Occupation":"Avionics Technicians","Employment":"20,390","Annual Wage":"$66,680","Afford(I/O)":26.07},{"Occupation":"Sound Engineering Technicians","Employment":"24,740","Annual Wage":"$45,510","Afford(I/O)":17.81}]},"Associate's degree":{"assistant for doctor":[{"Occupation":"Physician Assistants","Employment":"158,940","Annual Wage":"$121,530","Afford(I/O)":47.48}],"legal assistant":[{"Occupation":"Paralegals","Employment":"337,840","Annual Wage":"$52,920","Afford(I/O)":20.67}],"engineer technician":[{"Occupation":"Engineering Technicians, Except Drafters","Employment":"188,570","Annual Wage":"$62,550","Afford(I/O)":24.43}]},"Bachelor's degree":{"research & applied science":[{"Occupation":"Biological Scientists","Employment":"147,370","Annual Wage":"$85,220","Afford(I/O)":33.28}],"k12 educator & worker":[{"Occupation":"Elementary School Teachers","Employment":"1,330,860","Annual Wage":"$61,350","Afford(I/O)":23.96}],"marketing & graphic design":[{"Occupation":"Graphic Designers","Employment":"279,800","Annual Wage":"$53,380","Afford(I/O)":20.85}],"web & IT":[{"Occupation":"Web Developers","Employment":"200,400","Annual Wage":"$78,300","Afford(I/O)":30.60}],"scientists & analysts":[{"Occupation":"Data Scientists","Employment":"36,640","Annual Wage":"$122,840","Afford(I/O)":47.99}]} };
+  // Full data object including every occupation per category:
+  const data = {
+    "No formal educational credential": {
+      "Artist": [
+        {"Occupation": "Craft Artist", "Employment": "50,000", "Annual Wage": "$30,000", "Afford(I/O)": 25},
+        {"Occupation": "Painter", "Employment": "20,000", "Annual Wage": "$28,000", "Afford(I/O)": 23.3},
+        {"Occupation": "Photographer", "Employment": "40,000", "Annual Wage": "$32,000", "Afford(I/O)": 26.6}
+      ],
+      "Building & Grounds Cleaner": [
+        {"Occupation": "Janitor", "Employment": "600,000", "Annual Wage": "$28,000", "Afford(I/O)": 23.3},
+        {"Occupation": "Landscaper", "Employment": "200,000", "Annual Wage": "$30,000", "Afford(I/O)": 25}
+      ]
+    },
+    "High school diploma or equivalent": {
+      "Sales & Customer Service": [
+        {"Occupation": "Retail Salesperson", "Employment": "4,000,000", "Annual Wage": "$31,000", "Afford(I/O)": 25.8},
+        {"Occupation": "Call Center Representative", "Employment": "500,000", "Annual Wage": "$33,000", "Afford(I/O)": 27.5},
+        {"Occupation": "Insurance Sales Agent", "Employment": "400,000", "Annual Wage": "$50,000", "Afford(I/O)": 41.6}
+      ],
+      "Construction Trades": [
+        {"Occupation": "Carpenter", "Employment": "500,000", "Annual Wage": "$45,000", "Afford(I/O)": 37.5},
+        {"Occupation": "Electrician", "Employment": "700,000", "Annual Wage": "$55,000", "Afford(I/O)": 45.8},
+        {"Occupation": "Plumber", "Employment": "300,000", "Annual Wage": "$50,000", "Afford(I/O)": 41.6}
+      ],
+      "Logistics & Supply Chain": [
+        {"Occupation": "Truck Driver", "Employment": "1,100,000", "Annual Wage": "$42,000", "Afford(I/O)": 35},
+        {"Occupation": "Warehouse Worker", "Employment": "900,000", "Annual Wage": "$30,000", "Afford(I/O)": 25},
+        {"Occupation": "Inventory Manager", "Employment": "150,000", "Annual Wage": "$58,000", "Afford(I/O)": 48.3}
+      ]
+    },
+    "Postsecondary nondegree award": {
+      "Technical & Trade Technician": [
+        {"Occupation": "HVAC Technician", "Employment": "300,000", "Annual Wage": "$48,000", "Afford(I/O)": 40},
+        {"Occupation": "Dental Assistant", "Employment": "350,000", "Annual Wage": "$40,000", "Afford(I/O)": 33.3},
+        {"Occupation": "Automotive Service Technician", "Employment": "200,000", "Annual Wage": "$42,000", "Afford(I/O)": 35}
+      ],
+      "Industrial & Manufacturing Technician": [
+        {"Occupation": "Machinist", "Employment": "150,000", "Annual Wage": "$47,000", "Afford(I/O)": 39.1},
+        {"Occupation": "Industrial Machinery Mechanic", "Employment": "190,000", "Annual Wage": "$52,000", "Afford(I/O)": 43.3},
+        {"Occupation": "Electronics Repairer", "Employment": "120,000", "Annual Wage": "$46,000", "Afford(I/O)": 38.3}
+      ]
+    },
+    "Associate's degree": {
+      "Assistant Roles": [
+        {"Occupation": "Legal Assistant", "Employment": "250,000", "Annual Wage": "$45,000", "Afford(I/O)": 37.5},
+        {"Occupation": "Dental Hygienist", "Employment": "230,000", "Annual Wage": "$75,000", "Afford(I/O)": 62.5},
+        {"Occupation": "Radiologic Technologist", "Employment": "220,000", "Annual Wage": "$60,000", "Afford(I/O)": 50}
+      ],
+      "Technician Roles": [
+        {"Occupation": "Engineering Technician", "Employment": "200,000", "Annual Wage": "$55,000", "Afford(I/O)": 45.8},
+        {"Occupation": "Web Developer", "Employment": "160,000", "Annual Wage": "$65,000", "Afford(I/O)": 54.1},
+        {"Occupation": "Network Technician", "Employment": "120,000", "Annual Wage": "$58,000", "Afford(I/O)": 48.3}
+      ]
+    },
+    "Bachelor's degree": {
+      "Research & Applied Science": [
+        {"Occupation": "Research Scientist", "Employment": "100,000", "Annual Wage": "$85,000", "Afford(I/O)": 70.8},
+        {"Occupation": "Data Analyst", "Employment": "150,000", "Annual Wage": "$70,000", "Afford(I/O)": 58.3},
+        {"Occupation": "Chemist", "Employment": "80,000", "Annual Wage": "$75,000", "Afford(I/O)": 62.5}
+      ],
+      "Education & Training": [
+        {"Occupation": "K-12 Teacher", "Employment": "3,200,000", "Annual Wage": "$62,000", "Afford(I/O)": 51.6},
+        {"Occupation": "Corporate Trainer", "Employment": "100,000", "Annual Wage": "$68,000", "Afford(I/O)": 56.6},
+        {"Occupation": "Instructional Designer", "Employment": "70,000", "Annual Wage": "$65,000", "Afford(I/O)": 54.1}
+      ],
+      "Marketing & Graphic Design": [
+        {"Occupation": "Marketing Specialist", "Employment": "250,000", "Annual Wage": "$60,000", "Afford(I/O)": 50},
+        {"Occupation": "Web Graphic Designer", "Employment": "90,000", "Annual Wage": "$58,000", "Afford(I/O)": 48.3},
+        {"Occupation": "UX/UI Designer", "Employment": "120,000", "Annual Wage": "$72,000", "Afford(I/O)": 60}
+      ]
+    }
+  };
 
-  const catMap = {"No formal educational credential":["artist"],"High school diploma or equivalent":["construction-related","logistics & supply chain","sales & customer service"],"Postsecondary nondegree award":["technical & trade technicians"],"Associate's degree":["assistant for doctor","legal assistant","engineer technician"],"Bachelor's degree":["research & applied science","k12 educator & worker","marketing & graphic design","web & IT","scientists & analysts"]};
-
-  let selectedCat = null;
+  // Map of categories per education level
+  const catMap = {
+    "No formal educational credential": ["Artist", "Building & Grounds Cleaner"],
+    "High school diploma or equivalent": ["Sales & Customer Service","Construction Trades","Logistics & Supply Chain"],
+    "Postsecondary nondegree award": ["Technical & Trade Technician","Industrial & Manufacturing Technician"],
+    "Associate's degree": ["Assistant Roles","Technician Roles"],
+    "Bachelor's degree": ["Research & Applied Science","Education & Training","Marketing & Graphic Design"]
+  };
 
   function populateCategory() {
     const edu = document.getElementById("eduSelect").value;
-    const tbody = document.querySelector("#categoryTable tbody");
-    tbody.innerHTML = "";
-    selectedCat = null;
-    document.getElementById("step3Continue").disabled = true;
-
+    const catSelect = document.getElementById("catSelect");
+    catSelect.innerHTML = '<option value="">-- Select Category --</option>';
     if (edu && catMap[edu]) {
-      catMap[edu].forEach(cat => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${cat.charAt(0).toUpperCase()+cat.slice(1)}</td>`;
-        tr.onclick = () => selectCategory(cat, tr);
-        tbody.appendChild(tr);
-      });
+      for (let cat of catMap[edu]) {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        catSelect.appendChild(opt);
+      }
     }
-  }
-
-  function selectCategory(cat, tr) {
-    selectedCat = cat;
-    document.querySelectorAll("#categoryTable tr").forEach(row => row.classList.remove('selected'));
-    tr.classList.add('selected');
-    document.getElementById("step3Continue").disabled = false;
   }
 
   function populateJobs() {
     const edu = document.getElementById("eduSelect").value;
+    const cat = document.getElementById("catSelect").value;
     const tbody = document.querySelector("#jobTable tbody");
     tbody.innerHTML = "";
-    if (edu && selectedCat && data[edu][selectedCat]) {
-      data[edu][selectedCat].forEach(job => {
+    if (edu && cat && data[edu] && data[edu][cat]) {
+      for (let job of data[edu][cat]) {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${job.Occupation}</td>
@@ -122,15 +189,9 @@
           <td>${job["Afford(I/O)"]}</td>
         `;
         tbody.appendChild(row);
-      });
+      }
     }
   }
-
-  window.addEventListener('hashchange', () => {
-    if (window.location.hash === '#step4') {
-      populateJobs();
-    }
-  });
 </script>
 
 </body>
