@@ -94,13 +94,13 @@
     // Full dataset populated from the "true table" source
     const data = {
       "No formal educational credential": {
-        "artist": [
+        "Creative and Craft Artist": [
           { "Occupation": "Artists and Related Workers, All Other",                  "Employment": "400",    "Annual Wage": "$117,810", "Affordability Index": 39.31 },
           { "Occupation": "Craft Artists",                                           "Employment": "230",    "Annual Wage": "$108,234", "Affordability Index": 36.11 }
         ]
       },
       "High school diploma or equivalent": {
-        "sales": [
+        "Sales & Customer Service": [
           { "Occupation": "Sales Representatives, Wholesale and Manufacturing...",    "Employment": "39,970", "Annual Wage": "$82,237",  "Affordability Index": 27.44 },
           { "Occupation": "Sales Representatives of Services, Except Advertising...", "Employment": "27,140", "Annual Wage": "$87,253",  "Affordability Index": 29.11 },
           { "Occupation": "Property, Real Estate, and Community Association Managers","Employment": "14,840", "Annual Wage": "$84,600",  "Affordability Index": 28.23 },
@@ -109,12 +109,12 @@
           { "Occupation": "Advertising Sales Agents",                                "Employment": "3,530",  "Annual Wage": "$84,214",  "Affordability Index": 28.10 },
           { "Occupation": "Real Estate Brokers",                                     "Employment": "1,090",  "Annual Wage": "$97,070",  "Affordability Index": 32.39 }
         ],
-        "construction": [
+        "Construction Trades": [
           { "Occupation": "First-Line Supervisors of Construction Trades and...",     "Employment": "12,360", "Annual Wage": "$96,597",  "Affordability Index": 32.23 },
           { "Occupation": "Operating Engineers and Other Construction Equipment...",  "Employment": "4,630",  "Annual Wage": "$90,237",  "Affordability Index": 30.11 },
           { "Occupation": "Construction and Building Inspectors",                    "Employment": "2,590",  "Annual Wage": "$99,364",  "Affordability Index": 33.15 }
         ],
-        "supply-chain": [
+        "Logistics & Supply-chain": [
           { "Occupation": "Water and Wastewater Treatment Plant and System Operators","Employment": "1,350",  "Annual Wage": "$80,572",  "Affordability Index": 26.88 },
           { "Occupation": "Transportation Inspectors",                              "Employment": "480",    "Annual Wage": "$96,422",  "Affordability Index": 32.17 },
           { "Occupation": "Power Plant Operators",                                  "Employment": "310",    "Annual Wage": "$107,905", "Affordability Index": 36.00 },
@@ -123,18 +123,18 @@
         ]
       },
       "Postsecondary nondegree award": {
-        "technician": [
+        "Technical & Trade Technicians": [
           { "Occupation": "Audio and Video Technicians",                             "Employment": "4,430",  "Annual Wage": "$78,719",  "Affordability Index": 26.26 },
           { "Occupation": "Aircraft Mechanics and Service Technicians",               "Employment": "3,970",  "Annual Wage": "$85,724",  "Affordability Index": 28.60 },
           { "Occupation": "Avionics Technicians",                                   "Employment": "430",    "Annual Wage": "$94,027",  "Affordability Index": 31.37 }
         ],
-        "industrial": [
+        "Industrial & Manufacturing Technicians": [
           { "Occupation": "Sound Engineering Technicians",                           "Employment": "4,310",  "Annual Wage": "$87,704",  "Affordability Index": 29.26 },
           { "Occupation": "Lighting Technicians",                                    "Employment": "2,620",  "Annual Wage": "$92,471",  "Affordability Index": 30.85 },
           { "Occupation": "Electrical and Electronics Repairers...",                 "Employment": "420",    "Annual Wage": "$117,038", "Affordability Index": 39.05 },
           { "Occupation": "Electrical and Electronics Installers...",                "Employment": "60",     "Annual Wage": "$99,318",  "Affordability Index": 33.14 }
         ],
-        "construction": [
+        "Construction Trades": [
           { "Occupation": "Firefighters",                                            "Employment": "4,050",  "Annual Wage": "$113,175", "Affordability Index": 37.76 },
           { "Occupation": "First-Line Supervisors of Firefighting and...",            "Employment": "1,380",  "Annual Wage": "$167,661", "Affordability Index": 55.94 },
           { "Occupation": "Fire Inspectors and Investigators",                       "Employment": "120",    "Annual Wage": "$115,170", "Affordability Index": 38.42 },
@@ -142,15 +142,15 @@
         ]
       },
       "Associate's degree": {
-        "legal assistant": [
+        "Legal Assistant": [
           { "Occupation": "Paralegals and Legal Assistants",                        "Employment": "12,530", "Annual Wage": "$81,125",  "Affordability Index": 27.07 }
         ],
-        "assistant for doctor": [
+        "Healthcare Assitants": [
           { "Occupation": "Dental Hygienists",                                       "Employment": "5,380",  "Annual Wage": "$115,681", "Affordability Index": 38.60 },
           { "Occupation": "Respiratory Therapists",                                  "Employment": "4,040",  "Annual Wage": "$101,214", "Affordability Index": 33.77 },
           { "Occupation": "Radiation Therapists",                                    "Employment": "270",    "Annual Wage": "$145,356", "Affordability Index": 48.50 }
         ],
-        "engineer technician": [
+        "Engineering Technicians": [
           { "Occupation": "Broadcast Technicians",                                   "Employment": "5,000",  "Annual Wage": "$116,417", "Affordability Index": 38.84 },
           { "Occupation": "Electrical and Electronic Engineering Technologists...",  "Employment": "2,630",  "Annual Wage": "$84,624",  "Affordability Index": 28.23 },
           { "Occupation": "Engineering Technologists and Technicians...",            "Employment": "1,760",  "Annual Wage": "$78,165",  "Affordability Index": 26.08 },
@@ -162,7 +162,7 @@
         ]
       },
       "Bachelor's degree": {
-        "marketing/business": [
+        "Marketing & Business Management": [
           { "Occupation": "Business Operations Specialists, All Other",             "Employment": "36,020", "Annual Wage": "$102,650", "Affordability Index": 34.25 },
           { "Occupation": "Market Research Analysts and Marketing Specialists",      "Employment": "29,640", "Annual Wage": "$88,805",  "Affordability Index": 29.63 },
           { "Occupation": "Sales Managers",                                         "Employment": "27,430", "Annual Wage": "$140,410", "Affordability Index": 46.85 },
@@ -196,7 +196,7 @@
           { "Occupation": "Advertising and Promotions Managers",                  "Employment": "970",    "Annual Wage": "$200,311", "Affordability Index": 66.83 },
           { "Occupation": "Compensation and Benefits Managers",                   "Employment": "750",    "Annual Wage": "$167,593", "Affordability Index": 55.92 }
         ],
-        "educator": [
+        "K12 Teacher & Workers": [
           { "Occupation": "Elementary School Teachers, Except Special Education",  "Employment": "33,410","Annual Wage": "$96,685",  "Affordability Index": 32.26 },
           { "Occupation": "Secondary School Teachers, Except Special...",           "Employment": "24,220","Annual Wage": "$108,182", "Affordability Index": 36.09 },
           { "Occupation": "Child, Family, and School Social Workers",              "Employment": "17,120","Annual Wage": "$76,135",  "Affordability Index": 25.40 },
@@ -211,7 +211,7 @@
           { "Occupation": "Career/Technical Education Teachers, Secondary School", "Employment": "560",   "Annual Wage": "$104,044", "Affordability Index": 34.71 },
           { "Occupation": "Adult Basic Education, Adult Secondary Education...",   "Employment": "500",   "Annual Wage": "$100,182", "Affordability Index": 33.42 }
         ],
-        "cinematography": [
+        "Film, Video, & Media Productions": [
           { "Occupation": "Producers and Directors",                              "Employment": "30,210","Annual Wage": "$139,131","Affordability Index": 46.42 },
           { "Occupation": "Special Effects Artists and Animators",                "Employment": "9,880", "Annual Wage": "$140,585","Affordability Index": 46.90 },
           { "Occupation": "Film and Video Editors",                                "Employment": "7,400", "Annual Wage": "$104,555","Affordability Index": 34.88 },
@@ -221,7 +221,7 @@
           { "Occupation": "Music Directors and Composers",                        "Employment": "1,000", "Annual Wage": "$144,981","Affordability Index": 48.37 },
           { "Occupation": "Emergency Management Directors",                       "Employment": "150",   "Annual Wage": "$148,371","Affordability Index": 49.50 }
         ],
-        "engineer": [
+        "Engineering Professions": [
           { "Occupation": "Civil Engineers",                                      "Employment": "9,760", "Annual Wage": "$117,157","Affordability Index": 39.09 },
           { "Occupation": "Architectural and Engineering Managers",               "Employment": "7,290", "Annual Wage": "$192,616","Affordability Index": 64.26 },
           { "Occupation": "Engineers, All Other",                                 "Employment": "6,230", "Annual Wage": "$133,652","Affordability Index": 44.59 },
@@ -241,7 +241,7 @@
           { "Occupation": "Mining and Geological Engineers, Including...",        "Employment": "250",   "Annual Wage": "$132,837","Affordability Index": 44.32 },
           { "Occupation": "Petroleum Engineers",                                  "Employment": "220",   "Annual Wage": "$144,077","Affordability Index": 48.07 }
         ],
-        "scientists": [
+        "Science & Research Professions": [
           { "Occupation": "Data Scientists",                                      "Employment": "6,470", "Annual Wage": "$129,683","Affordability Index": 43.27 },
           { "Occupation": "Chemists",                                             "Employment": "1,930", "Annual Wage": "$96,216", "Affordability Index": 32.10 },
           { "Occupation": "Environmental Scientists and Specialists...",          "Employment": "1,770", "Annual Wage": "$108,529","Affordability Index": 36.21 },
