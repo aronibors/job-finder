@@ -266,13 +266,14 @@
       "Bachelor's degree": ["Marketing & Business Management","K12 Educator & School Worker","Film, Video & Media Production","Engineering Professions","Science & Research Professions"]
     };
 
-    function populateCategory() {
+  function populateCategory() {
       const edu = document.getElementById("eduSelect").value;
       const catSelect = document.getElementById("catSelect");
       catSelect.innerHTML = '<option value="">-- Select Category --</option>';
       if (edu && catMap[edu]) {
         catMap[edu].forEach(cat => {
-          catSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+          const label = catLabels[cat] || cat;
+          catSelect.innerHTML += `<option value="${cat}">${label}</option>`;
         });
       }
     }
