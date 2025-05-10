@@ -78,86 +78,125 @@
 </section>
 
 <script>
-  // Full data object including every occupation per category:
   const data = {
     "No formal educational credential": {
       "Artist": [
-        {"Occupation": "Craft Artist", "Employment": "50,000", "Annual Wage": "$30,000", "Afford(I/O)": 25},
-        {"Occupation": "Painter", "Employment": "20,000", "Annual Wage": "$28,000", "Afford(I/O)": 23.3},
-        {"Occupation": "Photographer", "Employment": "40,000", "Annual Wage": "$32,000", "Afford(I/O)": 26.6}
+        {"Occupation":"Craft Artist","Employment":"50,000","Annual Wage":"$30,000","Afford(I/O)":25},
+        {"Occupation":"Painter","Employment":"20,000","Annual Wage":"$28,000","Afford(I/O)":23.3},
+        {"Occupation":"Photographer","Employment":"40,000","Annual Wage":"$32,000","Afford(I/O)":26.6},
+        {"Occupation":"Street Performer","Employment":"15,000","Annual Wage":"$22,000","Afford(I/O)":18.3},
+        {"Occupation":"Flower Arranger","Employment":"35,000","Annual Wage":"$29,000","Afford(I/O)":24.1},
+        {"Occupation":"Furniture Assembler","Employment":"45,000","Annual Wage":"$27,000","Afford(I/O)":22.5},
+        {"Occupation":"Childcare Worker","Employment":"1,000,000","Annual Wage":"$25,000","Afford(I/O)":20.8}
       ],
       "Building & Grounds Cleaner": [
-        {"Occupation": "Janitor", "Employment": "600,000", "Annual Wage": "$28,000", "Afford(I/O)": 23.3},
-        {"Occupation": "Landscaper", "Employment": "200,000", "Annual Wage": "$30,000", "Afford(I/O)": 25}
+        {"Occupation":"Janitor","Employment":"600,000","Annual Wage":"$28,000","Afford(I/O)":23.3},
+        {"Occupation":"Landscaper","Employment":"200,000","Annual Wage":"$30,000","Afford(I/O)":25},
+        {"Occupation":"Window Cleaner","Employment":"50,000","Annual Wage":"$29,000","Afford(I/O)":24.1},
+        {"Occupation":"Groundskeeper","Employment":"120,000","Annual Wage":"$31,000","Afford(I/O)":25.8},
+        {"Occupation":"Maintenance Worker","Employment":"250,000","Annual Wage":"$33,000","Afford(I/O)":27.5},
+        {"Occupation":"Custodial Supervisor","Employment":"30,000","Annual Wage":"$35,000","Afford(I/O)":29.1}
       ]
     },
     "High school diploma or equivalent": {
       "Sales & Customer Service": [
-        {"Occupation": "Retail Salesperson", "Employment": "4,000,000", "Annual Wage": "$31,000", "Afford(I/O)": 25.8},
-        {"Occupation": "Call Center Representative", "Employment": "500,000", "Annual Wage": "$33,000", "Afford(I/O)": 27.5},
-        {"Occupation": "Insurance Sales Agent", "Employment": "400,000", "Annual Wage": "$50,000", "Afford(I/O)": 41.6}
+        {"Occupation":"Retail Salesperson","Employment":"4,000,000","Annual Wage":"$31,000","Afford(I/O)":25.8},
+        {"Occupation":"Call Center Representative","Employment":"500,000","Annual Wage":"$33,000","Afford(I/O)":27.5},
+        {"Occupation":"Insurance Sales Agent","Employment":"400,000","Annual Wage":"$50,000","Afford(I/O)":41.6},
+        {"Occupation":"Real Estate Agent","Employment":"300,000","Annual Wage":"$45,000","Afford(I/O)":37.5},
+        {"Occupation":"Cashier","Employment":"3,500,000","Annual Wage":"$25,000","Afford(I/O)":20.8},
+        {"Occupation":"Customer Service Rep.","Employment":"2,000,000","Annual Wage":"$34,000","Afford(I/O)":28.3},
+        {"Occupation":"Travel Agent","Employment":"100,000","Annual Wage":"$38,000","Afford(I/O)":31.6}
       ],
       "Construction Trades": [
-        {"Occupation": "Carpenter", "Employment": "500,000", "Annual Wage": "$45,000", "Afford(I/O)": 37.5},
-        {"Occupation": "Electrician", "Employment": "700,000", "Annual Wage": "$55,000", "Afford(I/O)": 45.8},
-        {"Occupation": "Plumber", "Employment": "300,000", "Annual Wage": "$50,000", "Afford(I/O)": 41.6}
+        {"Occupation":"Carpenter","Employment":"500,000","Annual Wage":"$45,000","Afford(I/O)":37.5},
+        {"Occupation":"Electrician","Employment":"700,000","Annual Wage":"$55,000","Afford(I/O)":45.8},
+        {"Occupation":"Plumber","Employment":"300,000","Annual Wage":"$50,000","Afford(I/O)":41.6},
+        {"Occupation":"Roofer","Employment":"120,000","Annual Wage":"$42,000","Afford(I/O)":35},
+        {"Occupation":"Sheet Metal Worker","Employment":"80,000","Annual Wage":"$48,000","Afford(I/O)":40},
+        {"Occupation":"Bricklayer","Employment":"90,000","Annual Wage":"$46,000","Afford(I/O)":38.3},
+        {"Occupation":"Construction Laborer","Employment":"1,200,000","Annual Wage":"$35,000","Afford(I/O)":29.1}
       ],
       "Logistics & Supply Chain": [
-        {"Occupation": "Truck Driver", "Employment": "1,100,000", "Annual Wage": "$42,000", "Afford(I/O)": 35},
-        {"Occupation": "Warehouse Worker", "Employment": "900,000", "Annual Wage": "$30,000", "Afford(I/O)": 25},
-        {"Occupation": "Inventory Manager", "Employment": "150,000", "Annual Wage": "$58,000", "Afford(I/O)": 48.3}
+        {"Occupation":"Truck Driver","Employment":"1,100,000","Annual Wage":"$42,000","Afford(I/O)":35},
+        {"Occupation":"Warehouse Worker","Employment":"900,000","Annual Wage":"$30,000","Afford(I/O)":25},
+        {"Occupation":"Inventory Manager","Employment":"150,000","Annual Wage":"$58,000","Afford(I/O)":48.3},
+        {"Occupation":"Forklift Operator","Employment":"250,000","Annual Wage":"$32,000","Afford(I/O)":26.6},
+        {"Occupation":"Supply Chain Coordinator","Employment":"100,000","Annual Wage":"$60,000","Afford(I/O)":50},
+        {"Occupation":"Logistics Analyst","Employment":"80,000","Annual Wage":"$65,000","Afford(I/O)":54.1},
+        {"Occupation":"Shipping & Receiving Clerk","Employment":"400,000","Annual Wage":"$28,000","Afford(I/O)":23.3}
       ]
     },
     "Postsecondary nondegree award": {
       "Technical & Trade Technician": [
-        {"Occupation": "HVAC Technician", "Employment": "300,000", "Annual Wage": "$48,000", "Afford(I/O)": 40},
-        {"Occupation": "Dental Assistant", "Employment": "350,000", "Annual Wage": "$40,000", "Afford(I/O)": 33.3},
-        {"Occupation": "Automotive Service Technician", "Employment": "200,000", "Annual Wage": "$42,000", "Afford(I/O)": 35}
+        {"Occupation":"HVAC Technician","Employment":"300,000","Annual Wage":"$48,000","Afford(I/O)":40},
+        {"Occupation":"Dental Assistant","Employment":"350,000","Annual Wage":"$40,000","Afford(I/O)":33.3},
+        {"Occupation":"Automotive Service Technician","Employment":"200,000","Annual Wage":"$42,000","Afford(I/O)":35},
+        {"Occupation":"Medical Assistant","Employment":"700,000","Annual Wage":"$35,000","Afford(I/O)":29.1},
+        {"Occupation":"Pharmacy Technician","Employment":"420,000","Annual Wage":"$36,000","Afford(I/O)":30},
+        {"Occupation":"Licensed Practical Nurse","Employment":"800,000","Annual Wage":"$48,000","Afford(I/O)":40}
       ],
       "Industrial & Manufacturing Technician": [
-        {"Occupation": "Machinist", "Employment": "150,000", "Annual Wage": "$47,000", "Afford(I/O)": 39.1},
-        {"Occupation": "Industrial Machinery Mechanic", "Employment": "190,000", "Annual Wage": "$52,000", "Afford(I/O)": 43.3},
-        {"Occupation": "Electronics Repairer", "Employment": "120,000", "Annual Wage": "$46,000", "Afford(I/O)": 38.3}
+        {"Occupation":"Machinist","Employment":"150,000","Annual Wage":"$47,000","Afford(I/O)":39.1},
+        {"Occupation":"Industrial Machinery Mechanic","Employment":"190,000","Annual Wage":"$52,000","Afford(I/O)":43.3},
+        {"Occupation":"Electronics Repairer","Employment":"120,000","Annual Wage":"$46,000","Afford(I/O)":38.3},
+        {"Occupation":"Quality Control Inspector","Employment":"160,000","Annual Wage":"$44,000","Afford(I/O)":36.6},
+        {"Occupation":"CNC Operator","Employment":"80,000","Annual Wage":"$45,000","Afford(I/O)":37.5},
+        {"Occupation":"Production Planner","Employment":"70,000","Annual Wage":"$55,000","Afford(I/O)":45.8}
       ]
     },
     "Associate's degree": {
       "Assistant Roles": [
-        {"Occupation": "Legal Assistant", "Employment": "250,000", "Annual Wage": "$45,000", "Afford(I/O)": 37.5},
-        {"Occupation": "Dental Hygienist", "Employment": "230,000", "Annual Wage": "$75,000", "Afford(I/O)": 62.5},
-        {"Occupation": "Radiologic Technologist", "Employment": "220,000", "Annual Wage": "$60,000", "Afford(I/O)": 50}
+        {"Occupation":"Legal Assistant","Employment":"250,000","Annual Wage":"$45,000","Afford(I/O)":37.5},
+        {"Occupation":"Paralegal","Employment":"200,000","Annual Wage":"$50,000","Afford(I/O)":41.6},
+        {"Occupation":"Dental Hygienist","Employment":"230,000","Annual Wage":"$75,000","Afford(I/O)":62.5},
+        {"Occupation":"Radiologic Technologist","Employment":"220,000","Annual Wage":"$60,000","Afford(I/O)":50},
+        {"Occupation":"Physical Therapist Assistant","Employment":"100,000","Annual Wage":"$55,000","Afford(I/O)":45.8},
+        {"Occupation":"Occupational Therapy Assistant","Employment":"80,000","Annual Wage":"$52,000","Afford(I/O)":43.3}
       ],
       "Technician Roles": [
-        {"Occupation": "Engineering Technician", "Employment": "200,000", "Annual Wage": "$55,000", "Afford(I/O)": 45.8},
-        {"Occupation": "Web Developer", "Employment": "160,000", "Annual Wage": "$65,000", "Afford(I/O)": 54.1},
-        {"Occupation": "Network Technician", "Employment": "120,000", "Annual Wage": "$58,000", "Afford(I/O)": 48.3}
+        {"Occupation":"Engineering Technician","Employment":"200,000","Annual Wage":"$55,000","Afford(I/O)":45.8},
+        {"Occupation":"Web Developer","Employment":"160,000","Annual Wage":"$65,000","Afford(I/O)":54.1},
+        {"Occupation":"Network Technician","Employment":"120,000","Annual Wage":"$58,000","Afford(I/O)":48.3},
+        {"Occupation":"Respiratory Therapist","Employment":"130,000","Annual Wage":"$60,000","Afford(I/O)":50},
+        {"Occupation":"Computer Support Specialist","Employment":"300,000","Annual Wage":"$53,000","Afford(I/O)":44.1},
+        {"Occupation":"Registered Nurse","Employment":"3,000,000","Annual Wage":"$75,000","Afford(I/O)":62.5}
       ]
     },
     "Bachelor's degree": {
       "Research & Applied Science": [
-        {"Occupation": "Research Scientist", "Employment": "100,000", "Annual Wage": "$85,000", "Afford(I/O)": 70.8},
-        {"Occupation": "Data Analyst", "Employment": "150,000", "Annual Wage": "$70,000", "Afford(I/O)": 58.3},
-        {"Occupation": "Chemist", "Employment": "80,000", "Annual Wage": "$75,000", "Afford(I/O)": 62.5}
+        {"Occupation":"Research Scientist","Employment":"100,000","Annual Wage":"$85,000","Afford(I/O)":70.8},
+        {"Occupation":"Data Analyst","Employment":"150,000","Annual Wage":"$70,000","Afford(I/O)":58.3},
+        {"Occupation":"Chemist","Employment":"80,000","Annual Wage":"$75,000","Afford(I/O)":62.5},
+        {"Occupation":"Biologist","Employment":"90,000","Annual Wage":"$68,000","Afford(I/O)":56.6},
+        {"Occupation":"Environmental Scientist","Employment":"60,000","Annual Wage":"$65,000","Afford(I/O)":54.1},
+        {"Occupation":"Statistician","Employment":"40,000","Annual Wage":"$80,000","Afford(I/O)":66.6}
       ],
       "Education & Training": [
-        {"Occupation": "K-12 Teacher", "Employment": "3,200,000", "Annual Wage": "$62,000", "Afford(I/O)": 51.6},
-        {"Occupation": "Corporate Trainer", "Employment": "100,000", "Annual Wage": "$68,000", "Afford(I/O)": 56.6},
-        {"Occupation": "Instructional Designer", "Employment": "70,000", "Annual Wage": "$65,000", "Afford(I/O)": 54.1}
+        {"Occupation":"K-12 Teacher","Employment":"3,200,000","Annual Wage":"$62,000","Afford(I/O)":51.6},
+        {"Occupation":"Corporate Trainer","Employment":"100,000","Annual Wage":"$68,000","Afford(I/O)":56.6},
+        {"Occupation":"Instructional Designer","Employment":"70,000","Annual Wage":"$65,000","Afford(I/O)":54.1},
+        {"Occupation":"Museum Educator","Employment":"30,000","Annual Wage":"$45,000","Afford(I/O)":37.5},
+        {"Occupation":"Adult Education Instructor","Employment":"50,000","Annual Wage":"$50,000","Afford(I/O)":41.6},
+        {"Occupation":"Education Administrator","Employment":"200,000","Annual Wage":"$75,000","Afford(I/O)":62.5}
       ],
       "Marketing & Graphic Design": [
-        {"Occupation": "Marketing Specialist", "Employment": "250,000", "Annual Wage": "$60,000", "Afford(I/O)": 50},
-        {"Occupation": "Web Graphic Designer", "Employment": "90,000", "Annual Wage": "$58,000", "Afford(I/O)": 48.3},
-        {"Occupation": "UX/UI Designer", "Employment": "120,000", "Annual Wage": "$72,000", "Afford(I/O)": 60}
+        {"Occupation":"Marketing Specialist","Employment":"250,000","Annual Wage":"$60,000","Afford(I/O)":50},
+        {"Occupation":"Web Graphic Designer","Employment":"90,000","Annual Wage":"$58,000","Afford(I/O)":48.3},
+        {"Occupation":"UX/UI Designer","Employment":"120,000","Annual Wage":"$72,000","Afford(I/O)":60},
+        {"Occupation":"Social Media Manager","Employment":"80,000","Annual Wage":"$65,000","Afford(I/O)":54.1},
+        {"Occupation":"Brand Manager","Employment":"60,000","Annual Wage":"$75,000","Afford(I/O)":62.5},
+        {"Occupation":"Advertising Coordinator","Employment":"40,000","Annual Wage":"$55,000","Afford(I/O)":45.8}
       ]
     }
   };
 
-  // Map of categories per education level
   const catMap = {
     "No formal educational credential": ["Artist", "Building & Grounds Cleaner"],
-    "High school diploma or equivalent": ["Sales & Customer Service","Construction Trades","Logistics & Supply Chain"],
-    "Postsecondary nondegree award": ["Technical & Trade Technician","Industrial & Manufacturing Technician"],
-    "Associate's degree": ["Assistant Roles","Technician Roles"],
-    "Bachelor's degree": ["Research & Applied Science","Education & Training","Marketing & Graphic Design"]
+    "High school diploma or equivalent": ["Sales & Customer Service", "Construction Trades", "Logistics & Supply Chain"],
+    "Postsecondary nondegree award": ["Technical & Trade Technician", "Industrial & Manufacturing Technician"],
+    "Associate's degree": ["Assistant Roles", "Technician Roles"],
+    "Bachelor's degree": ["Research & Applied Science", "Education & Training", "Marketing & Graphic Design"]
   };
 
   function populateCategory() {
@@ -172,6 +211,8 @@
         catSelect.appendChild(opt);
       }
     }
+    // clear previous jobs
+    document.querySelector("#jobTable tbody").innerHTML = "";
   }
 
   function populateJobs() {
