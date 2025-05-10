@@ -12,9 +12,9 @@
     body:not(:has(:target)) #step1 { display: block; }
     /* Basic styling */
     button { margin: 0.5em; padding: 0.5em 1em; }
+    select { margin: 1em 0; padding: 0.5em; }
     table { width: 100%; border-collapse: collapse; margin-top: 1em; }
     th, td { border: 1px solid #ccc; padding: 0.5em; text-align: left; }
-    select { margin: 1em 0; padding: 0.5em; }
   </style>
 </head>
 <body>
@@ -22,9 +22,7 @@
   <!-- Fallback for browsers without :has() support -->
   <script>
     window.onload = function () {
-      if (!location.hash) {
-        location.hash = "#step1";
-      }
+      if (!location.hash) location.hash = "#step1";
     };
   </script>
 
@@ -82,8 +80,11 @@
   <section id="step5">
     <h2>Step 4: Conclusion</h2>
     <p>Download the full spreadsheet containing job titles, wages, employment, and affordability index:</p>
-    <a href="https://docs.google.com/spreadsheets/d/19ziRp1iNENdopAgHci7nJTNzTbgiFV1xRYE2QhjCgq0/edit?usp=sharing" target="_blank">
-      📄 Google Sheet
+    <a href="https://docs.google.com/spreadsheets/d/19ziRp1iNENdopAgHci7nJTNzTbgiFV1xRYE2QhjCgq0/edit?usp=sharing" target="_blank">📄 Google Sheet</a>
+    <br><br>
+    <!-- Download link for the HTML itself -->
+    <a href="index.html" download="job_finder.html">
+      <button>📥 Download Job Finder HTML</button>
     </a>
     <br><br>
     <a href="#step4"><button>Back</button></a>
@@ -91,12 +92,12 @@
   </section>
 
   <script>
-    // Full dataset populated from the "true table" source
+    // --- 1) The full data object (unchanged raw keys) ---
     const data = {
       "No formal educational credential": {
         "artist": [
-          { "Occupation": "Artists and Related Workers, All Other",                  "Employment": "400",    "Annual Wage": "$117,810", "Affordability Index": 39.31 },
-          { "Occupation": "Craft Artists",                                           "Employment": "230",    "Annual Wage": "$108,234", "Affordability Index": 36.11 }
+          { "Occupation": "Artists and Related Workers, All Other", "Employment": "400", "Annual Wage": "$117,810", "Affordability Index": 39.31 },
+          { "Occupation": "Craft Artists",                            "Employment": "230", "Annual Wage": "$108,234", "Affordability Index": 36.11 }
         ]
       },
       "High school diploma or equivalent": {
@@ -110,16 +111,16 @@
           { "Occupation": "Real Estate Brokers",                                     "Employment": "1,090",  "Annual Wage": "$97,070",  "Affordability Index": 32.39 }
         ],
         "construction": [
-          { "Occupation": "First-Line Supervisors of Construction Trades and...",     "Employment": "12,360", "Annual Wage": "$96,597",  "Affordability Index": 32.23 },
-          { "Occupation": "Operating Engineers and Other Construction Equipment...",  "Employment": "4,630",  "Annual Wage": "$90,237",  "Affordability Index": 30.11 },
-          { "Occupation": "Construction and Building Inspectors",                    "Employment": "2,590",  "Annual Wage": "$99,364",  "Affordability Index": 33.15 }
+          { "Occupation": "First-Line Supervisors of Construction Trades and...",    "Employment": "12,360", "Annual Wage": "$96,597",  "Affordability Index": 32.23 },
+          { "Occupation": "Operating Engineers and Other Construction Equipment...", "Employment": "4,630",  "Annual Wage": "$90,237",  "Affordability Index": 30.11 },
+          { "Occupation": "Construction and Building Inspectors",                   "Employment": "2,590",  "Annual Wage": "$99,364",  "Affordability Index": 33.15 }
         ],
         "supply-chain": [
           { "Occupation": "Water and Wastewater Treatment Plant and System Operators","Employment": "1,350",  "Annual Wage": "$80,572",  "Affordability Index": 26.88 },
-          { "Occupation": "Transportation Inspectors",                              "Employment": "480",    "Annual Wage": "$96,422",  "Affordability Index": 32.17 },
-          { "Occupation": "Power Plant Operators",                                  "Employment": "310",    "Annual Wage": "$107,905", "Affordability Index": 36.00 },
-          { "Occupation": "Gas Plant Operators",                                    "Employment": "220",    "Annual Wage": "$119,649", "Affordability Index": 39.92 },
-          { "Occupation": "Forest Fire Inspectors and Prevention Specialists",       "Employment": "50",     "Annual Wage": "$104,797", "Affordability Index": 34.96 }
+          { "Occupation": "Transportation Inspectors",                             "Employment": "480",    "Annual Wage": "$96,422",  "Affordability Index": 32.17 },
+          { "Occupation": "Power Plant Operators",                                 "Employment": "310",    "Annual Wage": "$107,905", "Affordability Index": 36.00 },
+          { "Occupation": "Gas Plant Operators",                                   "Employment": "220",    "Annual Wage": "$119,649", "Affordability Index": 39.92 },
+          { "Occupation": "Forest Fire Inspectors and Prevention Specialists",      "Employment": "50",     "Annual Wage": "$104,797", "Affordability Index": 34.96 }
         ]
       },
       "Postsecondary nondegree award": {
@@ -136,9 +137,9 @@
         ],
         "construction": [
           { "Occupation": "Firefighters",                                            "Employment": "4,050",  "Annual Wage": "$113,175", "Affordability Index": 37.76 },
-          { "Occupation": "First-Line Supervisors of Firefighting and...",            "Employment": "1,380",  "Annual Wage": "$167,661", "Affordability Index": 55.94 },
-          { "Occupation": "Fire Inspectors and Investigators",                       "Employment": "120",    "Annual Wage": "$115,170", "Affordability Index": 38.42 },
-          { "Occupation": "Ship Engineers",                                          "Employment": "60",     "Annual Wage": "$126,627", "Affordability Index": 42.25 }
+          { "Occupation": "First-Line Supervisors of Firefighting and...",           "Employment": "1,380",  "Annual Wage": "$167,661", "Affordability Index": 55.94 },
+          { "Occupation": "Fire Inspectors and Investigators",                      "Employment": "120",    "Annual Wage": "$115,170", "Affordability Index": 38.42 },
+          { "Occupation": "Ship Engineers",                                         "Employment": "60",     "Annual Wage": "$126,627", "Affordability Index": 42.25 }
         ]
       },
       "Associate's degree": {
@@ -163,73 +164,73 @@
       },
       "Bachelor's degree": {
         "marketing/business": [
-          { "Occupation": "Business Operations Specialists, All Other",             "Employment": "36,020", "Annual Wage": "$102,650", "Affordability Index": 34.25 },
-          { "Occupation": "Market Research Analysts and Marketing Specialists",      "Employment": "29,640", "Annual Wage": "$88,805",  "Affordability Index": 29.63 },
-          { "Occupation": "Sales Managers",                                         "Employment": "27,430", "Annual Wage": "$140,410", "Affordability Index": 46.85 },
-          { "Occupation": "Management Analysts",                                    "Employment": "27,330", "Annual Wage": "$116,006", "Affordability Index": 38.70 },
-          { "Occupation": "Financial Managers",                                     "Employment": "24,200", "Annual Wage": "$198,014", "Affordability Index": 66.06 },
-          { "Occupation": "Managers, All Other",                                    "Employment": "24,070", "Annual Wage": "$175,354", "Affordability Index": 58.50 },
-          { "Occupation": "Computer and Information Systems Managers",              "Employment": "17,160", "Annual Wage": "$198,330", "Affordability Index": 66.17 },
-          { "Occupation": "Marketing Managers",                                     "Employment": "14,620", "Annual Wage": "$180,490", "Affordability Index": 60.22 },
-          { "Occupation": "Medical and Health Services Managers",                   "Employment": "14,140", "Annual Wage": "$151,887", "Affordability Index": 50.68 },
-          { "Occupation": "Computer Systems Analysts",                              "Employment": "10,470", "Annual Wage": "$124,764", "Affordability Index": 41.63 },
-          { "Occupation": "Financial and Investment Analysts",                      "Employment": "9,150",  "Annual Wage": "$120,130", "Affordability Index": 40.08 },
-          { "Occupation": "Administrative Services Managers",                      "Employment": "8,950",  "Annual Wage": "$131,254", "Affordability Index": 43.79 },
-          { "Occupation": "Social and Community Service Managers",                 "Employment": "8,310",  "Annual Wage": "$92,437",  "Affordability Index": 30.84 },
-          { "Occupation": "Construction Managers",                                  "Employment": "7,000",  "Annual Wage": "$136,581", "Affordability Index": 45.57 },
-          { "Occupation": "Human Resources Managers",                              "Employment": "6,460",  "Annual Wage": "$176,676", "Affordability Index": 58.95 },
-          { "Occupation": "Industrial Production Managers",                        "Employment": "5,890",  "Annual Wage": "$130,566", "Affordability Index": 43.56 },
-          { "Occupation": "Software Quality Assurance Analysts and Testers",       "Employment": "5,040",  "Annual Wage": "$118,978", "Affordability Index": 39.70 },
-          { "Occupation": "Agents and Business Managers of Artists...",            "Employment": "4,600",  "Annual Wage": "$142,693", "Affordability Index": 47.61 },
-          { "Occupation": "Facilities Managers",                                   "Employment": "4,040",  "Annual Wage": "$123,916", "Affordability Index": 41.34 },
-          { "Occupation": "Information Security Analysts",                         "Employment": "3,270",  "Annual Wage": "$131,331", "Affordability Index": 43.82 },
-          { "Occupation": "Public Relations Managers",                             "Employment": "2,800",  "Annual Wage": "$159,172", "Affordability Index": 53.11 },
-          { "Occupation": "Operations Research Analysts",                          "Employment": "2,230",  "Annual Wage": "$104,409", "Affordability Index": 34.83 },
-          { "Occupation": "News Analysts, Reporters, and Journalists",             "Employment": "2,030",  "Annual Wage": "$149,491", "Affordability Index": 49.88 },
-          { "Occupation": "Purchasing Managers",                                   "Employment": "1,800",  "Annual Wage": "$156,881", "Affordability Index": 52.34 },
-          { "Occupation": "Credit Analysts",                                       "Employment": "1,740",  "Annual Wage": "$98,255",  "Affordability Index": 32.78 },
-          { "Occupation": "Entertainment and Recreation Managers...",             "Employment": "1,740",  "Annual Wage": "$93,136",  "Affordability Index": 31.07 },
-          { "Occupation": "Natural Sciences Managers",                            "Employment": "1,420",  "Annual Wage": "$194,147", "Affordability Index": 64.77 },
-          { "Occupation": "Fundraising Managers",                                 "Employment": "1,340",  "Annual Wage": "$147,830", "Affordability Index": 49.32 },
-          { "Occupation": "Training and Development Managers",                    "Employment": "1,300",  "Annual Wage": "$155,552", "Affordability Index": 51.90 },
-          { "Occupation": "Budget Analysts",                                      "Employment": "1,240",  "Annual Wage": "$109,390", "Affordability Index": 36.50 },
-          { "Occupation": "Advertising and Promotions Managers",                  "Employment": "970",    "Annual Wage": "$200,311", "Affordability Index": 66.83 },
-          { "Occupation": "Compensation and Benefits Managers",                   "Employment": "750",    "Annual Wage": "$167,593", "Affordability Index": 55.92 }
+          { "Occupation": "Business Operations Specialists, All Other",            "Employment": "36,020", "Annual Wage": "$102,650", "Affordability Index": 34.25 },
+          { "Occupation": "Market Research Analysts and Marketing Specialists",     "Employment": "29,640", "Annual Wage": "$88,805",  "Affordability Index": 29.63 },
+          { "Occupation": "Sales Managers",                                        "Employment": "27,430", "Annual Wage": "$140,410","Affordability Index": 46.85 },
+          { "Occupation": "Management Analysts",                                   "Employment": "27,330", "Annual Wage": "$116,006","Affordability Index": 38.70 },
+          { "Occupation": "Financial Managers",                                    "Employment": "24,200", "Annual Wage": "$198,014","Affordability Index": 66.06 },
+          { "Occupation": "Managers, All Other",                                   "Employment": "24,070", "Annual Wage": "$175,354","Affordability Index": 58.50 },
+          { "Occupation": "Computer and Information Systems Managers",             "Employment": "17,160", "Annual Wage": "$198,330","Affordability Index": 66.17 },
+          { "Occupation": "Marketing Managers",                                    "Employment": "14,620", "Annual Wage": "$180,490","Affordability Index": 60.22 },
+          { "Occupation": "Medical and Health Services Managers",                  "Employment": "14,140", "Annual Wage": "$151,887","Affordability Index": 50.68 },
+          { "Occupation": "Computer Systems Analysts",                             "Employment": "10,470", "Annual Wage": "$124,764","Affordability Index": 41.63 },
+          { "Occupation": "Financial and Investment Analysts",                     "Employment": "9,150",  "Annual Wage": "$120,130","Affordability Index": 40.08 },
+          { "Occupation": "Administrative Services Managers",                     "Employment": "8,950",  "Annual Wage": "$131,254","Affordability Index": 43.79 },
+          { "Occupation": "Social and Community Service Managers",                "Employment": "8,310",  "Annual Wage": "$92,437", "Affordability Index": 30.84 },
+          { "Occupation": "Construction Managers",                                 "Employment": "7,000",  "Annual Wage": "$136,581","Affordability Index": 45.57 },
+          { "Occupation": "Human Resources Managers",                             "Employment": "6,460",  "Annual Wage": "$176,676","Affordability Index": 58.95 },
+          { "Occupation": "Industrial Production Managers",                       "Employment": "5,890",  "Annual Wage": "$130,566","Affordability Index": 43.56 },
+          { "Occupation": "Software Quality Assurance Analysts and Testers",      "Employment": "5,040",  "Annual Wage": "$118,978","Affordability Index": 39.70 },
+          { "Occupation": "Agents and Business Managers of Artists...",           "Employment": "4,600",  "Annual Wage": "$142,693","Affordability Index": 47.61 },
+          { "Occupation": "Facilities Managers",                                  "Employment": "4,040",  "Annual Wage": "$123,916","Affordability Index": 41.34 },
+          { "Occupation": "Information Security Analysts",                        "Employment": "3,270",  "Annual Wage": "$131,331","Affordability Index": 43.82 },
+          { "Occupation": "Public Relations Managers",                            "Employment": "2,800",  "Annual Wage": "$159,172","Affordability Index": 53.11 },
+          { "Occupation": "Operations Research Analysts",                         "Employment": "2,230",  "Annual Wage": "$104,409","Affordability Index": 34.83 },
+          { "Occupation": "News Analysts, Reporters, and Journalists",            "Employment": "2,030",  "Annual Wage": "$149,491","Affordability Index": 49.88 },
+          { "Occupation": "Purchasing Managers",                                  "Employment": "1,800",  "Annual Wage": "$156,881","Affordability Index": 52.34 },
+          { "Occupation": "Credit Analysts",                                      "Employment": "1,740",  "Annual Wage": "$98,255", "Affordability Index": 32.78 },
+          { "Occupation": "Entertainment and Recreation Managers...",            "Employment": "1,740",  "Annual Wage": "$93,136", "Affordability Index": 31.07 },
+          { "Occupation": "Natural Sciences Managers",                           "Employment": "1,420",  "Annual Wage": "$194,147","Affordability Index": 64.77 },
+          { "Occupation": "Fundraising Managers",                                "Employment": "1,340",  "Annual Wage": "$147,830","Affordability Index": 49.32 },
+          { "Occupation": "Training and Development Managers",                   "Employment": "1,300",  "Annual Wage": "$155,552","Affordability Index": 51.90 },
+          { "Occupation": "Budget Analysts",                                     "Employment": "1,240",  "Annual Wage": "$109,390","Affordability Index": 36.50 },
+          { "Occupation": "Advertising and Promotions Managers",                 "Employment": "970",    "Annual Wage": "$200,311","Affordability Index": 66.83 },
+          { "Occupation": "Compensation and Benefits Managers",                  "Employment": "750",    "Annual Wage": "$167,593","Affordability Index": 55.92 }
         ],
         "educator": [
-          { "Occupation": "Elementary School Teachers, Except Special Education",  "Employment": "33,410","Annual Wage": "$96,685",  "Affordability Index": 32.26 },
-          { "Occupation": "Secondary School Teachers, Except Special...",           "Employment": "24,220","Annual Wage": "$108,182", "Affordability Index": 36.09 },
-          { "Occupation": "Child, Family, and School Social Workers",              "Employment": "17,120","Annual Wage": "$76,135",  "Affordability Index": 25.40 },
-          { "Occupation": "Middle School Teachers, Except Special...",             "Employment": "14,290","Annual Wage": "$95,102",  "Affordability Index": 31.73 },
-          { "Occupation": "Special Education Teachers, Kindergarten...",           "Employment": "5,060", "Annual Wage": "$88,235",  "Affordability Index": 29.44 },
-          { "Occupation": "Teachers and Instructors, All Other",                   "Employment": "3,830", "Annual Wage": "$84,134",  "Affordability Index": 28.07 },
-          { "Occupation": "Special Education Teachers, Secondary School",          "Employment": "3,370", "Annual Wage": "$105,191", "Affordability Index": 35.10 },
-          { "Occupation": "Special Education Teachers, All Other",                 "Employment": "2,660", "Annual Wage": "$88,314",  "Affordability Index": 29.46 },
-          { "Occupation": "Career/Technical Education Teachers, Postsecondary",    "Employment": "2,030", "Annual Wage": "$91,349",  "Affordability Index": 30.48 },
-          { "Occupation": "Special Education Teachers, Middle School",             "Employment": "1,730", "Annual Wage": "$88,617",  "Affordability Index": 29.57 },
-          { "Occupation": "Kindergarten Teachers, Except Special Education",       "Employment": "1,160", "Annual Wage": "$96,742",  "Affordability Index": 32.28 },
-          { "Occupation": "Career/Technical Education Teachers, Secondary School", "Employment": "560",   "Annual Wage": "$104,044", "Affordability Index": 34.71 },
-          { "Occupation": "Adult Basic Education, Adult Secondary Education...",   "Employment": "500",   "Annual Wage": "$100,182", "Affordability Index": 33.42 }
+          { "Occupation": "Elementary School Teachers, Except Special Education", "Employment": "33,410","Annual Wage": "$96,685","Affordability Index": 32.26 },
+          { "Occupation": "Secondary School Teachers, Except Special...",          "Employment": "24,220","Annual Wage": "$108,182","Affordability Index": 36.09 },
+          { "Occupation": "Child, Family, and School Social Workers",             "Employment": "17,120","Annual Wage": "$76,135","Affordability Index": 25.40 },
+          { "Occupation": "Middle School Teachers, Except Special...",            "Employment": "14,290","Annual Wage": "$95,102","Affordability Index": 31.73 },
+          { "Occupation": "Special Education Teachers, Kindergarten...",          "Employment": "5,060", "Annual Wage": "$88,235","Affordability Index": 29.44 },
+          { "Occupation": "Teachers and Instructors, All Other",                  "Employment": "3,830", "Annual Wage": "$84,134","Affordability Index": 28.07 },
+          { "Occupation": "Special Education Teachers, Secondary School",         "Employment": "3,370", "Annual Wage": "$105,191","Affordability Index": 35.10 },
+          { "Occupation": "Special Education Teachers, All Other",                "Employment": "2,660", "Annual Wage": "$88,314","Affordability Index": 29.46 },
+          { "Occupation": "Career/Technical Education Teachers, Postsecondary",   "Employment": "2,030", "Annual Wage": "$91,349","Affordability Index": 30.48 },
+          { "Occupation": "Special Education Teachers, Middle School",            "Employment": "1,730", "Annual Wage": "$88,617","Affordability Index": 29.57 },
+          { "Occupation": "Kindergarten Teachers, Except Special Education",      "Employment": "1,160", "Annual Wage": "$96,742","Affordability Index": 32.28 },
+          { "Occupation": "Career/Technical Education Teachers, Secondary School","Employment": "560",   "Annual Wage": "$104,044","Affordability Index": 34.71 },
+          { "Occupation": "Adult Basic Education, Adult Secondary Education...",  "Employment": "500",   "Annual Wage": "$100,182","Affordability Index": 33.42 }
         ],
         "cinematography": [
-          { "Occupation": "Producers and Directors",                              "Employment": "30,210","Annual Wage": "$139,131","Affordability Index": 46.42 },
-          { "Occupation": "Special Effects Artists and Animators",                "Employment": "9,880", "Annual Wage": "$140,585","Affordability Index": 46.90 },
-          { "Occupation": "Film and Video Editors",                                "Employment": "7,400", "Annual Wage": "$104,555","Affordability Index": 34.88 },
-          { "Occupation": "Art Directors",                                         "Employment": "5,360", "Annual Wage": "$158,379","Affordability Index": 52.84 },
-          { "Occupation": "Camera Operators, Television, Video, and Film",         "Employment": "4,180", "Annual Wage": "$86,126", "Affordability Index": 28.73 },
-          { "Occupation": "Directors, Religious Activities and Education",         "Employment": "1,300", "Annual Wage": "$80,154", "Affordability Index": 26.74 },
-          { "Occupation": "Music Directors and Composers",                        "Employment": "1,000", "Annual Wage": "$144,981","Affordability Index": 48.37 },
-          { "Occupation": "Emergency Management Directors",                       "Employment": "150",   "Annual Wage": "$148,371","Affordability Index": 49.50 }
+          { "Occupation": "Producers and Directors",                             "Employment": "30,210","Annual Wage": "$139,131","Affordability Index": 46.42 },
+          { "Occupation": "Special Effects Artists and Animators",               "Employment": "9,880", "Annual Wage": "$140,585","Affordability Index": 46.90 },
+          { "Occupation": "Film and Video Editors",                               "Employment": "7,400", "Annual Wage": "$104,555","Affordability Index": 34.88 },
+          { "Occupation": "Art Directors",                                        "Employment": "5,360", "Annual Wage": "$158,379","Affordability Index": 52.84 },
+          { "Occupation": "Camera Operators, Television, Video, and Film",        "Employment": "4,180", "Annual Wage": "$86,126","Affordability Index": 28.73 },
+          { "Occupation": "Directors, Religious Activities and Education",        "Employment": "1,300", "Annual Wage": "$80,154","Affordability Index": 26.74 },
+          { "Occupation": "Music Directors and Composers",                       "Employment": "1,000", "Annual Wage": "$144,981","Affordability Index": 48.37 },
+          { "Occupation": "Emergency Management Directors",                     "Employment": "150",   "Annual Wage": "$148,371","Affordability Index": 49.50 }
         ],
         "engineer": [
-          { "Occupation": "Civil Engineers",                                      "Employment": "9,760", "Annual Wage": "$117,157","Affordability Index": 39.09 },
-          { "Occupation": "Architectural and Engineering Managers",               "Employment": "7,290", "Annual Wage": "$192,616","Affordability Index": 64.26 },
-          { "Occupation": "Engineers, All Other",                                 "Employment": "6,230", "Annual Wage": "$133,652","Affordability Index": 44.59 },
-          { "Occupation": "Industrial Engineers",                                 "Employment": "6,120", "Annual Wage": "$118,263","Affordability Index": 39.46 },
-          { "Occupation": "Electrical Engineers",                                 "Employment": "6,000", "Annual Wage": "$141,357","Affordability Index": 47.16 },
-          { "Occupation": "Mechanical Engineers",                                 "Employment": "5,750", "Annual Wage": "$122,258","Affordability Index": 40.79 },
-          { "Occupation": "Airline Pilots, Copilots, and Flight Engineers",       "Employment": "5,720", "Annual Wage": "$293,316","Affordability Index": 97.86 },
-          { "Occupation": "Aerospace Engineers",                                  "Employment": "5,550", "Annual Wage": "$153,955","Affordability Index": 51.37 },
+          { "Occupation": "Civil Engineers",                                     "Employment": "9,760", "Annual Wage": "$117,157","Affordability Index": 39.09 },
+          { "Occupation": "Architectural and Engineering Managers",              "Employment": "7,290", "Annual Wage": "$192,616","Affordability Index": 64.26 },
+          { "Occupation": "Engineers, All Other",                                "Employment": "6,230", "Annual Wage": "$133,652","Affordability Index": 44.59 },
+          { "Occupation": "Industrial Engineers",                                "Employment": "6,120", "Annual Wage": "$118,263","Affordability Index": 39.46 },
+          { "Occupation": "Electrical Engineers",                                "Employment": "6,000", "Annual Wage": "$141,357","Affordability Index": 47.16 },
+          { "Occupation": "Mechanical Engineers",                                "Employment": "5,750", "Annual Wage": "$122,258","Affordability Index": 40.79 },
+          { "Occupation": "Airline Pilots, Copilots, and Flight Engineers",      "Employment": "5,720", "Annual Wage": "$293,316","Affordability Index": 97.86 },
+          { "Occupation": "Aerospace Engineers",                                 "Employment": "5,550", "Annual Wage": "$153,955","Affordability Index": 51.37 },
           { "Occupation": "Electronics Engineers, Except Computer",               "Employment": "2,520", "Annual Wage": "$136,798","Affordability Index": 45.64 },
           { "Occupation": "Computer Hardware Engineers",                          "Employment": "1,600", "Annual Wage": "$139,256","Affordability Index": 46.46 },
           { "Occupation": "Environmental Engineers",                              "Employment": "1,590", "Annual Wage": "$113,986","Affordability Index": 38.03 },
@@ -241,9 +242,10 @@
           { "Occupation": "Mining and Geological Engineers, Including...",        "Employment": "250",   "Annual Wage": "$132,837","Affordability Index": 44.32 },
           { "Occupation": "Petroleum Engineers",                                  "Employment": "220",   "Annual Wage": "$144,077","Affordability Index": 48.07 }
         ],
+        ],
         "scientists": [
-          { "Occupation": "Data Scientists",                                      "Employment": "6,470", "Annual Wage": "$129,683","Affordability Index": 43.27 },
-          { "Occupation": "Chemists",                                             "Employment": "1,930", "Annual Wage": "$96,216", "Affordability Index": 32.10 },
+          { "Occupation": "Data Scientists",                                     "Employment": "6,470", "Annual Wage": "$129,683","Affordability Index": 43.27 },
+          { "Occupation": "Chemists",                                            "Employment": "1,930", "Annual Wage": "$96,216", "Affordability Index": 32.10 },
           { "Occupation": "Environmental Scientists and Specialists...",          "Employment": "1,770", "Annual Wage": "$108,529","Affordability Index": 36.21 },
           { "Occupation": "Biological Scientists, All Other",                    "Employment": "1,650", "Annual Wage": "$110,463","Affordability Index": 36.85 },
           { "Occupation": "Geoscientists, Except Hydrologists and Geographers",   "Employment": "760",   "Annual Wage": "$111,747","Affordability Index": 37.28 },
@@ -258,6 +260,7 @@
       }
     };
 
+    // --- 2) Map education levels to raw category keys ---
     const catMap = {
       "No formal educational credential": ["artist"],
       "High school diploma or equivalent": ["sales","construction","supply-chain"],
@@ -265,54 +268,56 @@
       "Associate's degree": ["legal assistant","assistant for doctor","engineer technician"],
       "Bachelor's degree": ["marketing/business","educator","cinematography","engineer","scientists"]
     };
-const catLabels = {
-    "artist":              "Creative & Craft Arts",
-    "sales":               "Sales & Customer Service",
-    "construction":        "Construction Trades",
-    "supply-chain":        "Logistics & Supply Chain",
-    "technician":          "Technical & Trade Technicians",
-    "industrial":          "Industrial & Manufacturing Technicians",
-    "legal assistant":     "Paralegals & Legal Support",
-    "assistant for doctor":"Healthcare Assistants",
-    "engineer technician": "Engineering & Technical Assistants",
-    "marketing/business":  "Marketing & Business Management",
-    "educator":            "Education & Training",
-    "cinematography":      "Film, Video & Media Production",
-    "engineer":            "Engineering Professions",
-    "scientists":          "Science & Research Professions"
-  };
 
+    // --- 3) Raw → Friendly labels ---
+    const catLabels = {
+      "artist":              "Creative & Craft Arts",
+      "sales":               "Sales & Customer Service",
+      "construction":        "Construction Trades",
+      "supply-chain":        "Logistics & Supply Chain",
+      "technician":          "Technical & Trade Technicians",
+      "industrial":          "Industrial & Manufacturing Technicians",
+      "legal assistant":     "Paralegals & Legal Support",
+      "assistant for doctor":"Healthcare Assistants",
+      "engineer technician": "Engineering & Technical Assistants",
+      "marketing/business":  "Marketing & Business Management",
+      "educator":            "Education & Training",
+      "cinematography":      "Film, Video & Media Production",
+      "engineer":            "Engineering Professions",
+      "scientists":          "Science & Research Professions"
+    };
+
+    // --- 4) Populate category dropdown with friendly labels ---
     function populateCategory() {
-    const edu = document.getElementById("eduSelect").value;
-    const catSelect = document.getElementById("catSelect");
-    catSelect.innerHTML = '<option value="">-- Select Category --</option>';
-    if (!edu || !catMap[edu]) return;
-    catMap[edu].forEach(rawKey => {
-      const label = catLabels[rawKey] || rawKey;
-      catSelect.innerHTML += 
-        `<option value="${rawKey}">${label}</option>`;
-    });
-  }
-
-  // 5) Populate Step 4 by looking up data[edu][rawKey]
-  function populateJobs() {
-    const edu = document.getElementById("eduSelect").value;
-    const cat  = document.getElementById("catSelect").value;
-    const tbody = document.querySelector("#jobTable tbody");
-    tbody.innerHTML = "";
-    if (edu && cat && data[edu] && data[edu][cat]) {
-      data[edu][cat].forEach(job => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${job["Occupation"]}</td>
-            <td>${job["Employment"]}</td>
-            <td>${job["Annual Wage"]}</td>
-            <td>${job["Affordability Index"]}</td>
-          </tr>`;
+      const edu = document.getElementById("eduSelect").value;
+      const catSelect = document.getElementById("catSelect");
+      catSelect.innerHTML = '<option value="">-- Select Category --</option>';
+      if (!edu || !catMap[edu]) return;
+      catMap[edu].forEach(rawKey => {
+        const label = catLabels[rawKey] || rawKey;
+        catSelect.innerHTML += `<option value="${rawKey}">${label}</option>`;
       });
     }
-  }
-</script>
+
+    // --- 5) Populate jobs table using rawKey lookup ---
+    function populateJobs() {
+      const edu = document.getElementById("eduSelect").value;
+      const cat  = document.getElementById("catSelect").value;
+      const tbody = document.querySelector("#jobTable tbody");
+      tbody.innerHTML = "";
+      if (edu && cat && data[edu] && data[edu][cat]) {
+        data[edu][cat].forEach(job => {
+          tbody.innerHTML += `
+            <tr>
+              <td>${job["Occupation"]}</td>
+              <td>${job["Employment"]}</td>
+              <td>${job["Annual Wage"]}</td>
+              <td>${job["Affordability Index"]}</td>
+            </tr>`;
+        });
+      }
+    }
+  </script>
+
 </body>
 </html>
-
