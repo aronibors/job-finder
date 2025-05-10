@@ -157,11 +157,7 @@
         ]
       }
     };
-        // …continuing inside your <script> immediately after the Associate's‐degree block…
-
-         // …continuing inside your <script> immediately after the Associate's-degree block…
-
-      ,"Bachelor's degree": {
+              ,"Bachelor's degree": {
         "Marketing & Business Management": [
           { "Occupation": "Business Operations Specialists, All Other",            "Employment": "36,020", "Annual Wage": "$102,650", "Affordability Index": 34.25 },
           { "Occupation": "Market Research Analysts and Marketing Specialists",     "Employment": "29,640", "Annual Wage": "$88,805",  "Affordability Index": 29.63 },
@@ -180,7 +176,7 @@
           { "Occupation": "Human Resources Managers",                              "Employment": "6,460",  "Annual Wage": "$176,676","Affordability Index": 58.95 },
           { "Occupation": "Industrial Production Managers",                        "Employment": "5,890",  "Annual Wage": "$130,566","Affordability Index": 43.56 },
           { "Occupation": "Software Quality Assurance Analysts and Testers",       "Employment": "5,040",  "Annual Wage": "$118,978","Affordability Index": 39.70 },
-          { "Occupation": "Agents and Business Managers of Artists, Performers","Employment":"4,600","Annual Wage":"$142,693","Affordability Index":47.61},
+          { "Occupation": "Agents and Business Managers of Artists, Performers, and Athletes","Employment":"4,600","Annual Wage":"$142,693","Affordability Index":47.61},
           { "Occupation": "Facilities Managers",                                   "Employment": "4,040",  "Annual Wage": "$123,916","Affordability Index": 41.34 },
           { "Occupation": "Information Security Analysts",                         "Employment": "3,270",  "Annual Wage": "$131,331","Affordability Index": 43.82 },
           { "Occupation": "Public Relations Managers",                             "Employment": "2,800",  "Annual Wage": "$159,172","Affordability Index": 53.11 },
@@ -234,7 +230,7 @@
       }
     };
 
-    // 2) Map education levels → friendly category names
+    // 2) Map educational levels → friendly categories
     const catMap = {
       "No formal educational credential":    ["Creative & Craft Arts"],
       "High school diploma or equivalent":   ["Sales & Customer Service","Construction Trades","Logistics & Supply Chain"],
@@ -243,7 +239,7 @@
       "Bachelor's degree":                   ["Marketing & Business Management","Education & Training","Film, Video & Media Production","Engineering Professions","Science & Research Professions"]
     };
 
-    // 3) Populate the category dropdown
+    // 3) Populate category dropdown
     function populateCategory() {
       const edu = document.getElementById("eduSelect").value;
       const catSelect = document.getElementById("catSelect");
@@ -254,7 +250,7 @@
       });
     }
 
-    // 4) Populate the jobs table
+    // 4) Populate jobs table
     function populateJobs() {
       const edu = document.getElementById("eduSelect").value;
       const cat = document.getElementById("catSelect").value;
@@ -273,13 +269,13 @@
       }
     }
 
-    // 5) Auto‐trigger population on section change
-    function handleHashChange() {
+    // 5) Auto-trigger on navigation
+    function handleHash() {
       if (location.hash === "#step3") populateCategory();
       if (location.hash === "#step4") populateJobs();
     }
-    window.addEventListener("hashchange", handleHashChange);
-    window.addEventListener("DOMContentLoaded", handleHashChange);
+    window.addEventListener("hashchange", handleHash);
+    window.addEventListener("DOMContentLoaded", handleHash);
   </script>
 </body>
 </html>
