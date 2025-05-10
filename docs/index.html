@@ -1,13 +1,21 @@
 <!DOCTYPE html>
+<html lang="en">
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Step-by-Step Job Finder</title>
   <style>
     /* Hide all sections by default */
     section { display: none; }
     /* Show only the targeted section */
     section:target { display: block; }
+    body { font-family: sans-serif; margin: 20px; }
+    h2 { margin-top: 0; }
+    button { margin: 5px; padding: 8px 12px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #f4f4f4; }
     /* Fallback: if no hash in URL, show step1 */
     body:not(:has(:target)) #step1 { display: block; }
     /* Basic styling */
@@ -19,6 +27,14 @@
 </head>
 <body>
 
+<section id="step1">
+  <h2>Welcome to the Job Finder</h2>
+  <p>First click <strong>Educational attainment</strong>.</p>
+  <p>Secondly, click the desired job category in the chosen educational attainment.</p>
+  <p>Thirdly, it will show the job names in said category, their annual wage before taxes, and affordability index (annual wage/monthly rent).</p>
+  <p>Fourth and finally, the Google spreadsheet which the data was gathered from will be available for download.</p>
+  <a href="#step2"><button>Continue</button></a>
+</section>
   <!-- Fallback for browsers without :has() support -->
   <script>
     window.onload = function () {
@@ -28,6 +44,17 @@
     };
   </script>
 
+<section id="step2">
+  <h2>Step 1: Choose Educational Attainment</h2>
+  <select id="eduSelect" onchange="populateCategory()">
+    <option value="">-- Select Education Level --</option>
+    <option value="No formal educational credential">No formal educational credential</option>
+    <option value="High school diploma or equivalent">High school diploma or equivalent</option>
+    <option value="Postsecondary nondegree award">Postsecondary nondegree award</option>
+    <option value="Associate's degree">Associate's degree</option>
+    <option value="Bachelor's degree">Bachelor's degree</option>
+  </select>
+  <div>
   <section id="step1">
     <h2>Welcome to the Job Finder</h2>
     <p>First click Educational attainment.</p>
@@ -49,9 +76,18 @@
     </select>
     <br>
     <a href="#step1"><button>Back</button></a>
+    <a href="#step3"><button>Continue</button></a>
+  </div>
+</section>
     <a href="#step3"><button>Continue to Step 2</button></a>
   </section>
 
+<section id="step3">
+  <h2>Step 2: Choose Job Category</h2>
+  <select id="catSelect" onchange="populateJobs()">
+    <option value="">-- Select Category --</option>
+  </select>
+  <div>
   <section id="step3">
     <h2>Step 2: Choose Job Category</h2>
     <select id="catSelect" onchange="populateJobs()">
@@ -59,9 +95,26 @@
     </select>
     <br>
     <a href="#step2"><button>Back</button></a>
+    <a href="#step4"><button>Continue</button></a>
+  </div>
+</section>
     <a href="#step4"><button>Continue to Step 3</button></a>
   </section>
 
+<section id="step4">
+  <h2>Step 3: Jobs</h2>
+  <table id="jobTable">
+    <thead>
+      <tr>
+        <th>Occupation</th>
+        <th>Employment</th>
+        <th>Annual Wage</th>
+        <th>Affordability Index</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <div>
   <section id="step4">
     <h2>Step 3: Jobs</h2>
     <table id="jobTable">
@@ -76,9 +129,17 @@
       <tbody></tbody>
     </table>
     <a href="#step3"><button>Back</button></a>
+    <a href="#step5"><button>Continue</button></a>
+  </div>
+</section>
     <a href="#step5"><button>Continue to Step 4</button></a>
   </section>
 
+<section id="step5">
+  <h2>Step 4: Conclusion</h2>
+  <p>Download the full spreadsheet containing job titles, wages, employment, and affordability index:</p>
+  <a href="https://docs.google.com/spreadsheets/d/19ziRp1iNENdopAgHci7nJTNzTbgiFV1xRYE2QhjCgq0" target="_blank">📄 Google Sheet</a>
+  <div>
   <section id="step5">
     <h2>Step 4: Conclusion</h2>
     <p>Download the full spreadsheet containing job titles, wages, employment, and affordability index:</p>
@@ -87,14 +148,26 @@
     </a>
     <br><br>
     <a href="#step4"><button>Back</button></a>
+    <a href="#step1"><button>Restart</button></a>
+  </div>
+</section>
     <button onclick="window.close()">Exit</button>
   </section>
 
+<script>
+  // Job data (populate with your actual data)
+  const data = {
+    "No formal educational credential": { "artist": [], "custodian": [] },
+    "High school diploma or equivalent": { "construction": [], "supply-chain": [], "sales": [] },
+    "Postsecondary nondegree award": { "construction": [], "industrial": [], "technician": [] },
+    "Associate's degree": { "assistant for doctor": [], "lawyer": [], "engineer technician": [] },
+    "Bachelor's degree": { "research": [], "k12 educator/worker": [], "marketing/business": [], "cinematography": [], "scientists": [] }
+  };
   <script>
     // Full dataset populated from the "true table" source
     const data = {
       "No formal educational credential": {
-        "Creative and Craft Artist": [
+        "Creative & Craft Arts": [
           { "Occupation": "Artists and Related Workers, All Other",                  "Employment": "400",    "Annual Wage": "$117,810", "Affordability Index": 39.31 },
           { "Occupation": "Craft Artists",                                           "Employment": "230",    "Annual Wage": "$108,234", "Affordability Index": 36.11 }
         ]
@@ -114,7 +187,7 @@
           { "Occupation": "Operating Engineers and Other Construction Equipment...",  "Employment": "4,630",  "Annual Wage": "$90,237",  "Affordability Index": 30.11 },
           { "Occupation": "Construction and Building Inspectors",                    "Employment": "2,590",  "Annual Wage": "$99,364",  "Affordability Index": 33.15 }
         ],
-        "Logistics & Supply-chain": [
+        "Logistics & Supply Chain": [
           { "Occupation": "Water and Wastewater Treatment Plant and System Operators","Employment": "1,350",  "Annual Wage": "$80,572",  "Affordability Index": 26.88 },
           { "Occupation": "Transportation Inspectors",                              "Employment": "480",    "Annual Wage": "$96,422",  "Affordability Index": 32.17 },
           { "Occupation": "Power Plant Operators",                                  "Employment": "310",    "Annual Wage": "$107,905", "Affordability Index": 36.00 },
@@ -134,7 +207,7 @@
           { "Occupation": "Electrical and Electronics Repairers...",                 "Employment": "420",    "Annual Wage": "$117,038", "Affordability Index": 39.05 },
           { "Occupation": "Electrical and Electronics Installers...",                "Employment": "60",     "Annual Wage": "$99,318",  "Affordability Index": 33.14 }
         ],
-        "Construction Trades": [
+        "Firefighters & Ship ": [
           { "Occupation": "Firefighters",                                            "Employment": "4,050",  "Annual Wage": "$113,175", "Affordability Index": 37.76 },
           { "Occupation": "First-Line Supervisors of Firefighting and...",            "Employment": "1,380",  "Annual Wage": "$167,661", "Affordability Index": 55.94 },
           { "Occupation": "Fire Inspectors and Investigators",                       "Employment": "120",    "Annual Wage": "$115,170", "Affordability Index": 38.42 },
@@ -145,12 +218,12 @@
         "Legal Assistant": [
           { "Occupation": "Paralegals and Legal Assistants",                        "Employment": "12,530", "Annual Wage": "$81,125",  "Affordability Index": 27.07 }
         ],
-        "Healthcare Assitants": [
+        "Healthcare Assistants" [
           { "Occupation": "Dental Hygienists",                                       "Employment": "5,380",  "Annual Wage": "$115,681", "Affordability Index": 38.60 },
           { "Occupation": "Respiratory Therapists",                                  "Employment": "4,040",  "Annual Wage": "$101,214", "Affordability Index": 33.77 },
           { "Occupation": "Radiation Therapists",                                    "Employment": "270",    "Annual Wage": "$145,356", "Affordability Index": 48.50 }
         ],
-        "Engineering Technicians": [
+        "Engineering Professions": [
           { "Occupation": "Broadcast Technicians",                                   "Employment": "5,000",  "Annual Wage": "$116,417", "Affordability Index": 38.84 },
           { "Occupation": "Electrical and Electronic Engineering Technologists...",  "Employment": "2,630",  "Annual Wage": "$84,624",  "Affordability Index": 28.23 },
           { "Occupation": "Engineering Technologists and Technicians...",            "Employment": "1,760",  "Annual Wage": "$78,165",  "Affordability Index": 26.08 },
@@ -196,7 +269,7 @@
           { "Occupation": "Advertising and Promotions Managers",                  "Employment": "970",    "Annual Wage": "$200,311", "Affordability Index": 66.83 },
           { "Occupation": "Compensation and Benefits Managers",                   "Employment": "750",    "Annual Wage": "$167,593", "Affordability Index": 55.92 }
         ],
-        "K12 Teacher & Workers": [
+        "K12 and Trade School Educators": [
           { "Occupation": "Elementary School Teachers, Except Special Education",  "Employment": "33,410","Annual Wage": "$96,685",  "Affordability Index": 32.26 },
           { "Occupation": "Secondary School Teachers, Except Special...",           "Employment": "24,220","Annual Wage": "$108,182", "Affordability Index": 36.09 },
           { "Occupation": "Child, Family, and School Social Workers",              "Employment": "17,120","Annual Wage": "$76,135",  "Affordability Index": 25.40 },
@@ -211,7 +284,7 @@
           { "Occupation": "Career/Technical Education Teachers, Secondary School", "Employment": "560",   "Annual Wage": "$104,044", "Affordability Index": 34.71 },
           { "Occupation": "Adult Basic Education, Adult Secondary Education...",   "Employment": "500",   "Annual Wage": "$100,182", "Affordability Index": 33.42 }
         ],
-        "Film, Video, & Media Productions": [
+        "Film, Video & Media Production": [
           { "Occupation": "Producers and Directors",                              "Employment": "30,210","Annual Wage": "$139,131","Affordability Index": 46.42 },
           { "Occupation": "Special Effects Artists and Animators",                "Employment": "9,880", "Annual Wage": "$140,585","Affordability Index": 46.90 },
           { "Occupation": "Film and Video Editors",                                "Employment": "7,400", "Annual Wage": "$104,555","Affordability Index": 34.88 },
@@ -258,6 +331,14 @@
       }
     };
 
+  // Category mapping
+  const catMap = {
+    "No formal educational credential": ["artist", "custodian"],
+    "High school diploma or equivalent": ["construction", "supply-chain", "sales"],
+    "Postsecondary nondegree award": ["construction", "industrial", "technician"],
+    "Associate's degree": ["assistant for doctor", "lawyer", "engineer technician"],
+    "Bachelor's degree": ["research", "k12 educator/worker", "marketing/business", "cinematography", "scientists"]
+  };
     const catMap = {
       "No formal educational credential": ["artist"],
       "High school diploma or equivalent": ["sales","construction","supply-chain"],
@@ -266,6 +347,17 @@
       "Bachelor's degree": ["marketing/business","educator","cinematography","engineer","scientists"]
     };
 
+  function populateCategory() {
+    const edu = document.getElementById('eduSelect').value;
+    const catSelect = document.getElementById('catSelect');
+    catSelect.innerHTML = '<option value="">-- Select Category --</option>';
+    if (edu && catMap[edu]) {
+      catMap[edu].forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        catSelect.appendChild(opt);
+      });
     function populateCategory() {
       const edu = document.getElementById("eduSelect").value;
       const catSelect = document.getElementById("catSelect");
@@ -276,7 +368,20 @@
         });
       }
     }
+  }
 
+  function populateJobs() {
+    const edu = document.getElementById('eduSelect').value;
+    const cat = document.getElementById('catSelect').value;
+    const tbody = document.querySelector('#jobTable tbody');
+    tbody.innerHTML = '';
+    if (edu && cat && data[edu][cat]) {
+      data[edu][cat].forEach(job => {
+        const row = document.createElement('tr');
+        ['Occupation', 'Employment', 'Annual Wage', 'Affordability Index'].forEach(key => {
+          const cell = document.createElement('td');
+          cell.textContent = job[key] || '';
+          row.appendChild(cell);
     function populateJobs() {
       const edu = document.getElementById("eduSelect").value;
       const cat = document.getElementById("catSelect").value;
@@ -292,9 +397,16 @@
               <td>${job["Affordability Index"]}</td>
             </tr>`;
         });
+        tbody.appendChild(row);
+      });
       }
     }
+  }
   </script>
 
+  window.addEventListener('DOMContentLoaded', () => {
+    if (!location.hash) location.hash = '#step1';
+  });
+</script>
 </body>
 </html>
