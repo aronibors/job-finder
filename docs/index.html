@@ -266,35 +266,35 @@
       "Bachelor's degree": ["Marketing & Business Management","K12 Educator/School Worker","Film, Video & Media Production","Engineering Professions","Science & Research Professions"]
     };
 
-    function populateCategory() {
-      const edu = document.getElementById("eduSelect").value;
-      const catSelect = document.getElementById("catSelect");
-      catSelect.innerHTML = '<option value="">-- Select Category --</option>';
-      if (edu && catMap[edu]) {
-        catMap[edu].forEach(cat => {
-          catSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
-        });
-      }
+   function populateCategory() {
+    const edu = document.getElementById("eduSelect").value;
+    const catSelect = document.getElementById("catSelect");
+    catSelect.innerHTML = '<option value="">-- Select Category --</option>';
+    if (!edu || !catMap[edu]) return;
+    catMap[edu].forEach(rawKey => {
+      const label = catLabels[rawKey] || rawKey;
+      catSelect.innerHTML += 
+        `<option value="${rawKey}">${label}</option>`;
+    });
+  }
+  // 5) Populate Step 4 by looking up data[edu][rawKey]
+  function populateJobs() {
+    const edu = document.getElementById("eduSelect").value;
+    const cat  = document.getElementById("catSelect").value;
+    const tbody = document.querySelector("#jobTable tbody");
+    tbody.innerHTML = "";
+    if (edu && cat && data[edu] && data[edu][cat]) {
+      data[edu][cat].forEach(job => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${job["Occupation"]}</td>
+            <td>${job["Employment"]}</td>
+            <td>${job["Annual Wage"]}</td>
+            <td>${job["Affordability Index"]}</td>
+          </tr>`;
+      });
     }
-
-    function populateJobs() {
-      const edu = document.getElementById("eduSelect").value;
-      const cat = document.getElementById("catSelect").value;
-      const tbody = document.querySelector("#jobTable tbody");
-      tbody.innerHTML = "";
-      if (edu && cat && data[edu][cat]) {
-        data[edu][cat].forEach(job => {
-          tbody.innerHTML += `
-            <tr>
-              <td>${job["Occupation"]}</td>
-              <td>${job["Employment"]}</td>
-              <td>${job["Annual Wage"]}</td>
-              <td>${job["Affordability Index"]}</td>
-            </tr>`;
-        });
-      }
-    }
-  </script>
-
+  }
+</script>
 </body>
 </html>
