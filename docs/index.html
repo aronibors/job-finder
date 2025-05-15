@@ -24,6 +24,7 @@
     <p><strong>Secondly:</strong> Choose the amount of training desired (“no training” = &lt;6 weeks; “training required” = 6 weeks–5 years or a bachelor’s; “extensive training” = &gt;5 years or requires a master’s+).</p>
     <p><strong>Thirdly:</strong> Pick the job category in the chosen Level of Education.</p>
     <p><strong>Fourthly:</strong> View the job names in that category, their mean annual wage before taxes, and affordability index (annual wage/monthly rent).</p>
+    <p><strong> Fifth:</strong> Download the spreadsheet with job name, #jobs available, mean annual wage before taxes, and affordability index. </p>
     <div class="nav-buttons">
       <a href="#step1"><button>Continue to Step 1</button></a>
     </div>
@@ -91,6 +92,17 @@
     </table>
     <div class="nav-buttons">
       <a href="#step3"><button>Back</button></a>
+      <a href="#step5"><button>Continue to Step 5</button></a>
+    </div>
+  </section>
+
+  <!-- Step 5: Download Spreadsheet -->
+  <section id="step5">
+    <h2>Step 5: Download Data</h2>
+    <p>The following spreadsheet has all the jobs, the # of job openings for said jobs, training required, mean annual wage, and affordability index:</p>
+    <p><a href="https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID" target="_blank">Download the full spreadsheet</a></p>
+    <div class="nav-buttons">
+      <a href="#step4"><button>Back</button></a>
       <a href="#intro"><button>Exit</button></a>
     </div>
   </section>
@@ -248,12 +260,6 @@
           catSelect.appendChild(opt);
         });
       }
-      clearJobs();
-    }
-
-    function clearJobs() {
-      document.getElementById('jobTable').innerHTML = '';
-    }
 
     function populateJobs() {
       const edu = document.getElementById('eduSelect').value;
