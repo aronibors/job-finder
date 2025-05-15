@@ -2,71 +2,98 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Job Finder: Complete Static Data</title>
+  <title>Job Finder: Complete Static Data with Navigation</title>
   <style>
-    section { display: none; }
+    section { display: none; padding: 1em; }
     section:target { display: block; }
-    body:not(:has(:target)) #step1 { display: block; }
+    /* Show intro by default */
+    body:not(:has(:target)) #intro { display: block; }
     table { width: 100%; border-collapse: collapse; margin-bottom: 1em; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
     select, button { margin: 0.5em 0; padding: 0.5em; }
+    .nav-buttons { margin-top: 1em; }
+    .nav-buttons button { margin-right: 0.5em; }
   </style>
 </head>
 <body>
 
-<!-- Step 1: Education Level -->
-<section id="step1">
-  <h2>Step 1: Choose Education Level</h2>
-  <select id="eduSelect" onchange="populateCategory(); clearFilters();">
-    <option value="">-- Select Education Level --</option>
-    <option value="No formal educational credential">No formal educational credential</option>
-    <option value="High school diploma or equivalent">High school diploma or equivalent</option>
-    <option value="Postsecondary nondegree award">Postsecondary nondegree award</option>
-    <option value="Associate's degree">Associate's degree</option>
-    <option value="Bachelor's degree">Bachelor's degree</option>
-    <option value="Master's degree">Master's degree</option>
-    <option value="Doctoral/Professional degree">Doctoral/Professional degree</option>
-  </select>
-</section>
+  <!-- Intro / Step 0 -->
+  <section id="intro">
+    <h2>Welcome to the Job Finder</h2>
+    <p><strong>First:</strong> Click “Continue” to choose your Level of Education.</p>
+    <p><strong>Secondly:</strong> Choose the amount of training desired (“no training” = &lt;6 weeks; “training required” = 6 weeks–5 years or a bachelor’s; “extensive training” = &gt;5 years or requires a master’s+).</p>
+    <p><strong>Thirdly:</strong> Pick the job category in the chosen Level of Education.</p>
+    <p><strong>Fourthly:</strong> View the job names in that category, their annual wage before taxes, and affordability index (annual wage/monthly rent).</p>
+    <div class="nav-buttons">
+      <a href="#step1"><button>Continue to Step 1</button></a>
+    </div>
+  </section>
 
-<!-- Step 2: Training Requirement -->
-<section id="step2">
-  <h2>Step 2: Choose Training Requirement</h2>
-  <select id="trainSelect" onchange="populateJobs();">
-    <option value="">-- Select Training Requirement --</option>
-    <option value="no_training">No Training</option>
-    <option value="training_required">Training Required</option>
-    <option value="extensive_training_required">Extensive Training Required</option>
-  </select>
-  <br><a href="#step1"><button>Back</button></a>
-</section>
+  <!-- Step 1: Education Level -->
+  <section id="step1">
+    <h2>Step 1: Choose Education Level</h2>
+    <select id="eduSelect" onchange="populateCategory(); clearJobs();">
+      <option value="">-- Select Education Level --</option>
+      <option value="No formal educational credential">No formal educational credential</option>
+      <option value="High school diploma or equivalent">High school diploma or equivalent</option>
+      <option value="Postsecondary nondegree award">Postsecondary nondegree award</option>
+      <option value="Associate's degree">Associate's degree</option>
+      <option value="Bachelor's degree">Bachelor's degree</option>
+      <option value="Master's degree">Master's degree</option>
+      <option value="Doctoral/Professional degree">Doctoral/Professional degree</option>
+    </select>
+    <div class="nav-buttons">
+      <a href="#intro"><button>Back</button></a>
+      <a href="#step2"><button>Continue to Step 2</button></a>
+    </div>
+  </section>
 
-<!-- Step 3: Job Category -->
-<section id="step3">
-  <h2>Step 3: Choose Job Category</h2>
-  <select id="catSelect" onchange="populateJobs();">
-    <option value="">-- Select Category --</option>
-  </select>
-  <br><a href="#step2"><button>Back</button></a>
-</section>
+  <!-- Step 2: Training Requirement -->
+  <section id="step2">
+    <h2>Step 2: Choose Training Requirement</h2>
+    <select id="trainSelect" onchange="clearJobs();">
+      <option value="">-- Select Training Requirement --</option>
+      <option value="no_training">No Training</option>
+      <option value="training_required">Training Required</option>
+      <option value="extensive_training_required">Extensive Training Required</option>
+    </select>
+    <div class="nav-buttons">
+      <a href="#step1"><button>Back</button></a>
+      <a href="#step3"><button>Continue to Step 3</button></a>
+    </div>
+  </section>
 
-<!-- Step 4: Jobs Table -->
-<section id="step4">
-  <h2>Step 4: Jobs (Affordability Index > 25)</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Occupation</th>
-        <th>Jobs Available</th>
-        <th>Mean Annual Wage</th>
-        <th>Affordability Index</th>
-      </tr>
-    </thead>
-    <tbody id="jobTable"></tbody>
-  </table>
-  <a href="#step3"><button>Back</button></a>
-</section>
+  <!-- Step 3: Job Category -->
+  <section id="step3">
+    <h2>Step 3: Choose Job Category</h2>
+    <select id="catSelect" onchange="populateJobs();">
+      <option value="">-- Select Category --</option>
+    </select>
+    <div class="nav-buttons">
+      <a href="#step2"><button>Back</button></a>
+      <a href="#step4"><button>Continue to Step 4</button></a>
+    </div>
+  </section>
 
+  <!-- Step 4: Jobs Table -->
+  <section id="step4">
+    <h2>Step 4: Jobs (Affordability Index &gt; 25)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Occupation</th>
+          <th>Jobs Available</th>
+          <th>Mean Annual Wage</th>
+          <th>Affordability Index</th>
+        </tr>
+      </thead>
+      <tbody id="jobTable"></tbody>
+    </table>
+    <div class="nav-buttons">
+      <a href="#step3"><button>Back</button></a>
+      <a href="#intro"><button>Exit</button></a>
+    </div>
+  </section>
 <script>
   const data = {
     "No formal educational credential": {
