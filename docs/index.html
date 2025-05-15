@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Job Finder: Complete Static Data with Navigation</title>
   <style>
     section { display: none; padding: 1em; }
     section:target { display: block; }
-    /* Show intro by default */
+    /* show intro by default */
     body:not(:has(:target)) #intro { display: block; }
     table { width: 100%; border-collapse: collapse; margin-bottom: 1em; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
@@ -23,7 +23,7 @@
     <p><strong>First:</strong> Click “Continue” to choose your Level of Education.</p>
     <p><strong>Secondly:</strong> Choose the amount of training desired (“no training” = &lt;6 weeks; “training required” = 6 weeks–5 years or a bachelor’s; “extensive training” = &gt;5 years or requires a master’s+).</p>
     <p><strong>Thirdly:</strong> Pick the job category in the chosen Level of Education.</p>
-    <p><strong>Fourthly:</strong> View the job names in that category, their annual wage before taxes, and affordability index (annual wage/monthly rent).</p>
+    <p><strong>Fourthly:</strong> View the job names in that category, their mean annual wage before taxes, and affordability index (annual wage/monthly rent).</p>
     <div class="nav-buttons">
       <a href="#step1"><button>Continue to Step 1</button></a>
     </div>
@@ -94,182 +94,187 @@
       <a href="#intro"><button>Exit</button></a>
     </div>
   </section>
-<script>
-  const data = {
-    "No formal educational credential": {
-      "Creative & Craft Arts": [
-        {Occupation: "Artists and Related Workers, All Other", Employment: 400, "Mean Annual Wage": "$117,810", "Affordability Index": 39.31, training: "training_required"},
-        {Occupation: "Craft Artists", Employment: 230, "Mean Annual Wage": "$108,234", "Affordability Index": 36.11, training: "training_required"}
-      ]
-    },
-    "High school diploma or equivalent": {
-      "Sales & Customer Service": [
-        {Occupation: "Sales Representatives, Wholesale and Manufacturing, Except Scientific and Technical Products", Employment: 39970, "Mean Annual Wage": "$82,237", "Affordability Index": 27.44, training: "training_required"},
-        {Occupation: "Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel", Employment: 27140, "Mean Annual Wage": "$86,045", "Affordability Index": 28.71, training: "training_required"},
-        {Occupation: "Insurance Sales Agents", Employment: 8280, "Mean Annual Wage": "$88,072", "Affordability Index": 29.38, training: "training_required"},
-        {Occupation: "Media and Communication Workers, All Other", Employment: 6730, "Mean Annual Wage": "$131,444", "Affordability Index": 43.85, training: "training_required"},
-        {Occupation: "Real Estate Brokers", Employment: 1090, "Mean Annual Wage": "$97,070", "Affordability Index": 32.39, training: "training_required"},
-        {Occupation: "Flight Attendants", Employment: 9750, "Mean Annual Wage": "$84,111", "Affordability Index": 28.06, training: "training_required"}
-      ],
-      "Construction Trades": [
-        {Occupation: "First-Line Supervisors of Construction Trades and Extraction Workers", Employment: 12360, "Mean Annual Wage": "$96,597", "Affordability Index": 32.23, training: "extensive_training_required"},
-        {Occupation: "Electricians", Employment: 11800, "Mean Annual Wage": "$87,683", "Affordability Index": 29.25, training: "training_required"},
-        {Occupation: "Operating Engineers and Other Construction Equipment Operators", Employment: 6700, "Mean Annual Wage": "$84,427", "Affordability Index": 28.17, training: "training_required"},
-        {Occupation: "Construction and Building Inspectors", Employment: 2760, "Mean Annual Wage": "$91,154", "Affordability Index": 30.41, training: "training_required"}
-      ],
-      "Logistics & Supply Chain": [
-        {Occupation: "Transportation, Storage, and Distribution Managers", Employment: 8990, "Mean Annual Wage": "$121,002", "Affordability Index": 40.37, training: "no_training"},
-        {Occupation: "Bus and Truck Mechanics and Diesel Engine Specialists", Employment: 6700, "Mean Annual Wage": "$75,231", "Affordability Index": 25.10, training: "training_required"},
-        {Occupation: "Transportation Inspectors", Employment: 1610, "Mean Annual Wage": "$97,414", "Affordability Index": 32.50, training: "training_required"},
-        {Occupation: "Power Distributors and Dispatchers", Employment: 1930, "Mean Annual Wage": "$129,556", "Affordability Index": 43.24, training: "extensive_training_required"},
-        {Occupation: "Petroleum Pump System Operators, Refinery Operators, and Gaugers", Employment: 910, "Mean Annual Wage": "$111,102", "Affordability Index": 37.05, training: "training_required"},
-        {Occupation: "Power Plant Operators", Employment: 780, "Mean Annual Wage": "$93,616", "Affordability Index": 31.22, training: "training_required"}
-      ]
-    },
-    "Postsecondary nondegree award": {
-      "Technical & Trade Technician": [
-        {Occupation: "Licensed Practical and Licensed Vocational Nurses", Employment: 24830, "Mean Annual Wage": "$78,317", "Affordability Index": 26.13, training: "training_required"},
-        {Occupation: "Audio and Video Technicians", Employment: 4430, "Mean Annual Wage": "$78,719", "Affordability Index": 26.26, training: "training_required"},
-        {Occupation: "Sound Engineering Technicians", Employment: 4310, "Mean Annual Wage": "$87,704", "Affordability Index": 29.26, training: "training_required"},
-        {Occupation: "Firefighters", Employment: 4050, "Mean Annual Wage": "$113,175", "Affordability Index": 37.76, training: "training_required"},
-        {Occupation: "Aircraft Mechanics and Service Technicians", Employment: 3970, "Mean Annual Wage": "$85,724", "Affordability Index": 28.60, training: "training_required"},
-        {Occupation: "Lighting Technicians", Employment: 2620, "Mean Annual Wage": "$92,471", "Affordability Index": 30.85, training: "training_required"},
-        {Occupation: "Commercial Pilots", Employment: 1490, "Mean Annual Wage": "$235,000", "Affordability Index": 78.40, training: "extensive_training_required"},
-        {Occupation: "First-Line Supervisors of Firefighting and Prevention Workers", Employment: 1380, "Mean Annual Wage": "$167,661", "Affordability Index": 55.94, training: "extensive_training_required"},
-        {Occupation: "Healthcare Practitioners and Technical Workers, All Other", Employment: 1190, "Mean Annual Wage": "$80,564", "Affordability Index": 26.88, training: "training_required"},
-        {Occupation: "Makeup Artists, Theatrical and Performance", Employment: 990, "Mean Annual Wage": "$108,557", "Affordability Index": 36.22, training: "training_required"},
-        {Occupation: "Computer Numerically Controlled Tool Programmers", Employment: 850, "Mean Annual Wage": "$83,493", "Affordability Index": 27.86, training: "training_required"},
-        {Occupation: "Paramedics", Employment: 770, "Mean Annual Wage": "$79,465", "Affordability Index": 26.51, training: "training_required"},
-        {Occupation: "Captains, Mates, and Pilots of Water Vessels", Employment: 560, "Mean Annual Wage": "$90,910", "Affordability Index": 30.33, training: "training_required"},
-        {Occupation: "Avionics Technicians", Employment: 430, "Mean Annual Wage": "$94,027", "Affordability Index": 31.37, training: "training_required"},
-        {Occupation: "Electrical and Electronics Repairers, Powerhouse, Substation, and Relay", Employment: 420, "Mean Annual Wage": "$117,038", "Affordability Index": 39.05, training: "extensive_training_required"}
-      ]
-    },
-    "Associate's degree": {
-      "Assistant Roles": [
-        {Occupation: "Registered Nurses", Employment: 3000000, "Mean Annual Wage": "$78,000", "Affordability Index": 26.02, training: "training_required"}
-      ],
-      "Technician Roles": [
-        {Occupation: "Nuclear Medicine Technologists", Employment: 10000, "Mean Annual Wage": "$80,000", "Affordability Index": 26.68, training: "training_required"}
-      ]
-    },
-    "Bachelor's degree": {
-      "Research & Applied Science": [
-        {"Occupation":"Accountants and Auditors","Employment":46380,"Mean Annual Wage":"$99,384","Afford(I/O)":33.16,"Training Required":""},
-        {"Occupation":"Software Developers","Employment":39500,"Mean Annual Wage":"$158,424","Afford(I/O)":52.86,"Training Required":"Extensive Training Required"},
-        {"Occupation":"Business Operations Specialists, All Other","Employment":36020,"Mean Annual Wage":"$102,650","Afford(I/O)":34.25,"Training Required":"Extensive Training Required"},
-        {"Occupation":"Market Research Analysts and Marketing Specialists","Employment":29640,"Mean Annual Wage":"$88,805","Afford(I/O)":29.63,"Training Required":"Extensive Training Required"},
-        {"Occupation":"Management Analysts","Employment":27330,"Mean Annual Wage":"$116,006","Afford(I/O)":38.70,"Training Required":"Extensive Training Required"},
-        {"Occupation":"Project Management Specialists","Employment":25900,"Mean Annual Wage":"$112,045","Afford(I/O)":37.38,"Training Required":""},
-        {"Occupation":"Financial Managers","Employment":24200,"Mean Annual Wage":"$198,014","Afford(I/O)":66.06,"Training Required":"Extensive Training Required"},
-        {"Occupation":"Computer Systems Analysts","Employment":10470,"Mean Annual Wage":"$124,764","Afford(I/O)":41.63,"Training Required":"Extensive Training Required"},
-        {"Occupation":"Financial and Investment Analysts","Employment":9150,"Mean Annual Wage":"$120,130","Afford(I/O)":40.08,"Training Required":"Extensive Training Required"},
-        {"Occupation":"Data Scientists","Employment":6470,"Mean Annual Wage":"$129,683","Afford(I/O)":43.27,"Training Required":"Training Required"},
-        {"Occupation":"Software Quality Assurance Analysts and Testers","Employment":5040,"Mean Annual Wage":"$118,978","Afford(I/O)":39.70,"Training Required":"Training Required"},
-        {"Occupation":"Information Security Analysts","Employment":3270,"Mean Annual Wage":"$131,331","Afford(I/O)":43.82,"Training Required":"Extensive Training Required"},
-        {"Occupation":"Compensation, Benefits, and Job Analysis Specialists","Employment":2770,"Mean Annual Wage":"$95,561","Afford(I/O)":31.88,"Training Required":"Training Required"},
-        {"Occupation":"Web Developers","Employment":2430,"Mean Annual Wage":"$111,103","Afford(I/O)":37.07,"Training Required":"Extensive Training Required"},
-        {"Occupation":"Operations Research Analysts","Employment":2230,"Mean Annual Wage":"$104,409","Afford(I/O)":34.83,"Training Required":"Extensive Training Required"}
-      ],
-      "Education & Training": [
-        {"Occupation":"Elementary School Teachers, Except Special Education","Employment":33410,"Mean Annual Wage":"$96,685","Afford(I/O)":32.26,"Training Required":"Extensive Training Required"},
-        {"Occupation":"Secondary School Teachers, Except Special and Career/Technical Education","Employment":24220,"Mean Annual Wage":"$108,182","Afford(I/O)":36.09,"Training Required":"Extensive Training Required"}
-      ],
-      "Marketing & Graphic Design": [
-        {"Occupation":"Producers and Directors","Employment":30210,"Mean Annual Wage":"$139,131","Afford(I/O)":46.42,"Training Required":"Extensive Training Required"},
-        {"Occupation":"Sales Managers","Employment":27430,"Mean Annual Wage":"$140,410","Afford(I/O)":46.85,"Training Required":"Training Required"},
-        {"Occupation":"Marketing Managers","Employment":14620,"Mean Annual Wage":"$180,490","Afford(I/O)":60.22,"Training Required":""},
-        {"Occupation":"Graphic Designers","Employment":10760,"Mean Annual Wage":"$82,573","Afford(I/O)":27.55,"Training Required":"Training Required"},
-        {"Occupation":"Public Relations Specialists","Employment":9170,"Mean Annual Wage":"$83,761","Afford(I/O)":27.95,"Training Required":"Training Required"},
-        {"Occupation":"Web and Digital Interface Designers","Employment":6560,"Mean Annual Wage":"$115,034","Afford(I/O)":38.38,"Training Required":"Training Required"},
-        {"Occupation":"Fashion Designers","Employment":3360,"Mean Annual Wage":"$121,702","Afford(I/O)":40.60,"Training Required":"Extensive Training Required"},
-        {"Occupation":"Public Relations Managers","Employment":2800,"Mean Annual Wage":"$159,172","Afford(I/O)":53.11,"Training Required":"Training Required"},
-        {"Occupation":"Interior Designers","Employment":2760,"Mean Annual Wage":"$82,805","Afford(I/O)":27.63,"Training Required":"Training Required"},
-        {"Occupation":"Commercial and Industrial Designers","Employment":1680,"Mean Annual Wage":"$94,237","Afford(I/O)":31.44,"Training Required":"Training Required"},
-        {"Occupation":"Advertising and Promotions Managers","Employment":970,"Mean Annual Wage":"$200,311","Afford(I/O)":66.83,"Training Required":"Extensive Training Required"}
-      ]
+
+  <script>
+    const data = {
+      "No formal educational credential": {
+        "Creative & Craft Arts": [
+          {Occupation: "Artists and Related Workers, All Other", Employment: 400, "Mean Annual Wage": "$117,810", "Affordability Index": 39.31, training: "training_required"},
+          {Occupation: "Craft Artists", Employment: 230, "Mean Annual Wage": "$108,234", "Affordability Index": 36.11, training: "training_required"}
+        ]
+      },
+      "High school diploma or equivalent": {
+        "Sales & Customer Service": [
+          {Occupation: "Sales Representatives, Wholesale and Manufacturing, Except Scientific and Technical Products", Employment: 39970, "Mean Annual Wage": "$82,237", "Affordability Index": 27.44, training: "training_required"},
+          {Occupation: "Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel", Employment: 27140, "Mean Annual Wage": "$86,045", "Affordability Index": 28.71, training: "training_required"},
+          {Occupation: "Insurance Sales Agents", Employment: 8280, "Mean Annual Wage": "$88,072", "Affordability Index": 29.38, training: "training_required"},
+          {Occupation: "Media and Communication Workers, All Other", Employment: 6730, "Mean Annual Wage": "$131,444", "Affordability Index": 43.85, training: "training_required"},
+          {Occupation: "Real Estate Brokers", Employment: 1090, "Mean Annual Wage": "$97,070", "Affordability Index": 32.39, training: "training_required"},
+          {Occupation: "Flight Attendants", Employment: 9750, "Mean Annual Wage": "$84,111", "Affordability Index": 28.06, training: "training_required"}
+        ],
+        "Construction Trades": [
+          {Occupation: "First-Line Supervisors of Construction Trades and Extraction Workers", Employment: 12360, "Mean Annual Wage": "$96,597", "Affordability Index": 32.23, training: "extensive_training_required"},
+          {Occupation: "Electricians", Employment: 11800, "Mean Annual Wage": "$87,683", "Affordability Index": 29.25, training: "training_required"},
+          {Occupation: "Operating Engineers and Other Construction Equipment Operators", Employment: 6700, "Mean Annual Wage": "$84,427", "Affordability Index": 28.17, training: "training_required"},
+          {Occupation: "Construction and Building Inspectors", Employment: 2760, "Mean Annual Wage": "$91,154", "Affordability Index": 30.41, training: "training_required"}
+        ],
+        "Logistics & Supply Chain": [
+          {Occupation: "Transportation, Storage, and Distribution Managers", Employment: 8990, "Mean Annual Wage": "$121,002", "Affordability Index": 40.37, training: "no_training"},
+          {Occupation: "Bus and Truck Mechanics and Diesel Engine Specialists", Employment: 6700, "Mean Annual Wage": "$75,231", "Affordability Index": 25.10, training: "training_required"},
+          {Occupation: "Transportation Inspectors", Employment: 1610, "Mean Annual Wage": "$97,414", "Affordability Index": 32.50, training: "training_required"},
+          {Occupation: "Power Distributors and Dispatchers", Employment: 1930, "Mean Annual Wage": "$129,556", "Affordability Index": 43.24, training: "extensive_training_required"},
+          {Occupation: "Petroleum Pump System Operators, Refinery Operators, and Gaugers", Employment: 910, "Mean Annual Wage": "$111,102", "Affordability Index": 37.05, training: "training_required"},
+          {Occupation: "Power Plant Operators", Employment: 780, "Mean Annual Wage": "$93,616", "Affordability Index": 31.22, training: "training_required"}
+        ]
+      },
+      "Postsecondary nondegree award": {
+        "Technical & Trade Technician": [
+          {Occupation: "Licensed Practical and Licensed Vocational Nurses", Employment: 24830, "Mean Annual Wage": "$78,317", "Affordability Index": 26.13, training: "training_required"},
+          {Occupation: "Audio and Video Technicians", Employment: 4430, "Mean Annual Wage": "$78,719", "Affordability Index": 26.26, training: "training_required"},
+          {Occupation: "Sound Engineering Technicians", Employment: 4310, "Mean Annual Wage": "$87,704", "Affordability Index": 29.26, training: "training_required"},
+          {Occupation: "Firefighters", Employment: 4050, "Mean Annual Wage": "$113,175", "Affordability Index": 37.76, training: "training_required"},
+          {Occupation: "Aircraft Mechanics and Service Technicians", Employment: 3970, "Mean Annual Wage": "$85,724", "Affordability Index": 28.60, training: "training_required"},
+          {Occupation: "Lighting Technicians", Employment: 2620, "Mean Annual Wage": "$92,471", "Affordability Index": 30.85, training: "training_required"},
+          {Occupation: "Commercial Pilots", Employment: 1490, "Mean Annual Wage": "$235,000", "Affordability Index": 78.40, training: "extensive_training_required"},
+          {Occupation: "First-Line Supervisors of Firefighting and Prevention Workers", Employment: 1380, "Mean Annual Wage": "$167,661", "Affordability Index": 55.94, training: "extensive_training_required"},
+          {Occupation: "Healthcare Practitioners and Technical Workers, All Other", Employment: 1190, "Mean Annual Wage": "$80,564", "Affordability Index": 26.88, training: "training_required"},
+          {Occupation: "Makeup Artists, Theatrical and Performance", Employment: 990, "Mean Annual Wage": "$108,557", "Affordability Index": 36.22, training: "training_required"},
+          {Occupation: "Computer Numerically Controlled Tool Programmers", Employment: 850, "Mean Annual Wage": "$83,493", "Affordability Index": 27.86, training: "training_required"},
+          {Occupation: "Paramedics", Employment: 770, "Mean Annual Wage": "$79,465", "Affordability Index": 26.51, training: "training_required"},
+          {Occupation: "Captains, Mates, and Pilots of Water Vessels", Employment: 560, "Mean Annual Wage": "$90,910", "Affordability Index": 30.33, training: "training_required"},
+          {Occupation: "Avionics Technicians", Employment: 430, "Mean Annual Wage": "$94,027", "Affordability Index": 31.37, training: "training_required"},
+          {Occupation: "Electrical and Electronics Repairers, Powerhouse, Substation, and Relay", Employment: 420, "Mean Annual Wage": "$117,038", "Affordability Index": 39.05, training: "extensive_training_required"}
+        ]
+      },
+      "Associate's degree": {
+        "Assistant Roles": [
+          {Occupation: "Registered Nurses", Employment: 3000000, "Mean Annual Wage": "$78,000", "Affordability Index": 26.02, training: "training_required"}
+        ],
+        "Technician Roles": [
+          {Occupation: "Nuclear Medicine Technologists", Employment: 10000, "Mean Annual Wage": "$80,000", "Affordability Index": 26.68, training: "training_required"}
+        ]
+      },
+      "Bachelor's degree": {
+        "Research & Applied Science": [
+          {Occupation:"Accountants and Auditors",Employment:46380,"Mean Annual Wage":"$99,384","Affordability Index":33.16,training:"no_training"},
+          {Occupation:"Software Developers",Employment:39500,"Mean Annual Wage":"$158,424","Affordability Index":52.86,training:"extensive_training_required"},
+          {Occupation:"Business Operations Specialists, All Other",Employment:36020,"Mean Annual Wage":"$102,650","Affordability Index":34.25,training:"extensive_training_required"},
+          {Occupation:"Market Research Analysts and Marketing Specialists",Employment:29640,"Mean Annual Wage":"$88,805","Affordability Index":29.63,training:"extensive_training_required"},
+          {Occupation:"Management Analysts",Employment:27330,"Mean Annual Wage":"$116,006","Affordability Index":38.70,training:"extensive_training_required"},
+          {Occupation:"Project Management Specialists",Employment:25900,"Mean Annual Wage":"$112,045","Affordability Index":37.38,training:"no_training"},
+          {Occupation:"Financial Managers",Employment:24200,"Mean Annual Wage":"$198,014","Affordability Index":66.06,training:"extensive_training_required"},
+          {Occupation:"Computer Systems Analysts",Employment:10470,"Mean Annual Wage":"$124,764","Affordability Index":41.63,training:"extensive_training_required"},
+          {Occupation:"Financial and Investment Analysts",Employment:9150,"Mean Annual Wage":"$120,130","Affordability Index":40.08,training:"extensive_training_required"},
+          {Occupation:"Data Scientists",Employment:6470,"Mean Annual Wage":"$129,683","Affordability Index":43.27,training:"training_required"},
+          {Occupation:"Software Quality Assurance Analysts and Testers",Employment:5040,"Mean Annual Wage":"$118,978","Affordability Index":39.70,training:"training_required"},
+          {Occupation:"Information Security Analysts",Employment:3270,"Mean Annual Wage":"$131,331","Affordability Index":43.82,training:"extensive_training_required"},
+          {Occupation:"Compensation, Benefits, and Job Analysis Specialists",Employment:2770,"Mean Annual Wage":"$95,561","Affordability Index":31.88,training:"training_required"},
+          {Occupation:"Web Developers",Employment:2430,"Mean Annual Wage":"$111,103","Affordability Index":37.07,training:"extensive_training_required"},
+          {Occupation:"Operations Research Analysts",Employment:2230,"Mean Annual Wage":"$104,409","Affordability Index":34.83,training:"extensive_training_required"}
+        ],
+        "Education & Training": [
+          {Occupation:"Elementary School Teachers, Except Special Education",Employment:33410,"Mean Annual Wage":"$96,685","Affordability Index":32.26,training:"extensive_training_required"},
+          {Occupation:"Secondary School Teachers, Except Special and Career/Technical Education",Employment:24220,"Mean Annual Wage":"$108,182","Affordability Index":36.09,training:"extensive_training_required"}
+        ],
+        "Marketing & Graphic Design": [
+          {Occupation:"Producers and Directors",Employment:30210,"Mean Annual Wage":"$139,131","Affordability Index":46.42,training:"extensive_training_required"},
+          {Occupation:"Sales Managers",Employment:27430,"Mean Annual Wage":"$140,410","Affordability Index":46.85,training:"training_required"},
+          {Occupation:"Marketing Managers",Employment:14620,"Mean Annual Wage":"$180,490","Affordability Index":60.22,training:"no_training"},
+          {Occupation:"Graphic Designers",Employment:10760,"Mean Annual Wage":"$82,573","Affordability Index":27.55,training:"training_required"},
+          {Occupation:"Public Relations Specialists",Employment:9170,"Mean Annual Wage":"$83,761","Affordability Index":27.95,training:"training_required"},
+          {Occupation:"Web and Digital Interface Designers",Employment:6560,"Mean Annual Wage":"$115,034","Affordability Index":38.38,training:"training_required"},
+          {Occupation:"Fashion Designers",Employment:3360,"Mean Annual Wage":"$121,702","Affordability Index":40.60,training:"extensive_training_required"},
+          {Occupation:"Public Relations Managers",Employment:2800,"Mean Annual Wage":"$159,172","Affordability Index":53.11,training:"training_required"},
+          {Occupation:"Interior Designers",Employment:2760,"Mean Annual Wage":"$82,805","Affordability Index":27.63,training:"training_required"},
+          {Occupation:"Commercial and Industrial Designers",Employment:1680,"Mean Annual Wage":"$94,237","Affordability Index":31.44,training:"training_required"},
+          {Occupation:"Advertising and Promotions Managers",Employment:970,"Mean Annual Wage":"$200,311","Affordability Index":66.83,training:"extensive_training_required"}
+        ]
+      },
+      "Master's degree": {
+        "Health Counselors & Mental Health": [
+          {Occupation:"Mental Health Counselors",Employment:14400,"Mean Annual Wage":"$80,000","Affordability Index":26.70,training:"training_required"},
+          {Occupation:"Rehabilitation Counselors",Employment:9420,"Mean Annual Wage":"$80,000","Affordability Index":26.70,training:"training_required"},
+          {Occupation:"Substance Abuse and Behavioral Disorder Counselors",Employment:3540,"Mean Annual Wage":"$80,000","Affordability Index":26.70,training:"training_required"},
+          {Occupation:"Psychiatric Technicians",Employment:3780,"Mean Annual Wage":"$80,000","Affordability Index":26.70,training:"training_required"}
+        ],
+        "Physician's Assistant": [
+          {Occupation:"Physician Assistants",Employment:11500,"Mean Annual Wage":"$121,530","Affordability Index":40.51,training:"training_required"},
+          {Occupation:"Surgical Physician Assistants",Employment:3400,"Mean Annual Wage":"$124,410","Affordability Index":41.47,training:"training_required"},
+          {Occupation:"Emergency Medicine Physician Assistants",Employment:2900,"Mean Annual Wage":"$123,160","Affordability Index":41.05,training:"training_required"},
+          {Occupation:"Pediatric Physician Assistants",Employment:1700,"Mean Annual Wage":"$117,220","Affordability Index":39.08,training:"training_required"}
+        ]
+      },
+      "Doctoral/Professional degree": {
+        "Physicians/Medical Doctors": [
+          {Occupation:"Family Medicine Physicians",Employment:45000,"Mean Annual Wage":"$214,370","Affordability Index":71.46,training:"extensive_training_required"},
+          {Occupation:"Psychiatrists",Employment:15000,"Mean Annual Wage":"$249,760","Affordability Index":83.28,training:"extensive_training_required"},
+          {Occupation:"Surgeons",Employment:26000,"Mean Annual Wage":"$255,110","Affordability Index":85.03,training:"extensive_training_required"},
+          {Occupation:"Anesthesiologists",Employment:15000,"Mean Annual Wage":"$261,730","Affordability Index":87.24,training:"extensive_training_required"}
+        ],
+        "Postsecondary Professors": [
+          {Occupation:"Biological Science Professors",Employment:2900,"Mean Annual Wage":"$101,580","Affordability Index":33.87,training:"extensive_training_required"},
+          {Occupation:"Business Professors",Employment:5800,"Mean Annual Wage":"$120,680","Affordability Index":40.23,training:"extensive_training_required"},
+          {Occupation:"Engineering Professors",Employment:3500,"Mean Annual Wage":"$112,970","Affordability Index":37.68,training:"extensive_training_required"},
+          {Occupation:"Education Professors",Employment:4300,"Mean Annual Wage":"$83,920","Affordability Index":27.96,training:"extensive_training_required"}
+        ],
+        "Scientists": [
+          {Occupation:"Medical Scientists",Employment:19000,"Mean Annual Wage":"$101,210","Affordability Index":33.74,training:"extensive_training_required"},
+          {Occupation:"Biochemists and Biophysicists",Employment:5300,"Mean Annual Wage":"$94,130","Affordability Index":31.38,training:"extensive_training_required"},
+          {Occupation:"Microbiologists",Employment:2300,"Mean Annual Wage":"$84,400","Affordability Index":28.12,training:"extensive_training_required"},
+          {Occupation:"Environmental Scientists and Specialists",Employment:8300,"Mean Annual Wage":"$76,500","Affordability Index":25.51,training:"extensive_training_required"}
+        ]
+      }
+    };
+
+    const catMap = {
+      "No formal educational credential": ["Creative & Craft Arts"],
+      "High school diploma or equivalent": ["Sales & Customer Service","Construction Trades","Logistics & Supply Chain"],
+      "Postsecondary nondegree award": ["Technical & Trade Technician"],
+      "Associate's degree": ["Assistant Roles","Technician Roles"],
+      "Bachelor's degree": ["Research & Applied Science","Education & Training","Marketing & Graphic Design"],
+      "Master's degree": ["Health Counselors & Mental Health","Physician's Assistant"],
+      "Doctoral/Professional degree": ["Physicians/Medical Doctors","Postsecondary Professors","Scientists"]
+    };
+
+    function populateCategory() {
+      const edu = document.getElementById('eduSelect').value;
+      const catSelect = document.getElementById('catSelect');
+      catSelect.innerHTML = '<option value="">-- Select Category --</option>';
+      if (edu && catMap[edu]) {
+        catMap[edu].forEach(cat => {
+          const opt = document.createElement('option');
+          opt.value = cat;
+          opt.textContent = cat;
+          catSelect.appendChild(opt);
+        });
+      }
+      clearJobs();
     }
-    },
-    "Master's degree": {
-      "Health Counselors & Mental Health": [
-        {Occupation: "Mental Health Counselors", Employment: 14400, "Mean Annual Wage": "$80,000", "Affordability Index": 26.70, training: "training_required"},
-        {Occupation: "Rehabilitation Counselors", Employment: 9420, "Mean Annual Wage": "$80,000", "Affordability Index": 26.70, training: "training_required"},
-        {Occupation: "Substance Abuse and Behavioral Disorder Counselors", Employment: 3540, "Mean Annual Wage": "$80,000", "Affordability Index": 26.70, training: "training_required"},
-        {Occupation: "Psychiatric Technicians", Employment: 3780, "Mean Annual Wage": "$80,000", "Affordability Index": 26.70, training: "training_required"}
-      ],
-      "Physician's Assistant": [
-        {Occupation: "Physician Assistants", Employment: 11500, "Mean Annual Wage": "$121,530", "Affordability Index": 40.51, training: "training_required"},
-        {Occupation: "Surgical Physician Assistants", Employment: 3400, "Mean Annual Wage": "$124,410", "Affordability Index": 41.47, training: "training_required"},
-        {Occupation: "Emergency Medicine Physician Assistants", Employment: 2900, "Mean Annual Wage": "$123,160", "Affordability Index": 41.05, training: "training_required"},
-        {Occupation: "Pediatric Physician Assistants", Employment: 1700, "Mean Annual Wage": "$117,220", "Affordability Index": 39.08, training: "training_required"}
-      ]
-    },
-    "Doctoral/Professional degree": {
-      "Physicians/Medical Doctors": [
-        {Occupation: "Family Medicine Physicians", Employment: 45000, "Mean Annual Wage": "$214,370", "Affordability Index": 71.46, training: "extensive_training_required"},
-        {Occupation: "Psychiatrists", Employment: 15000, "Mean Annual Wage": "$249,760", "Affordability Index": 83.28, training: "extensive_training_required"},
-        {Occupation: "Surgeons", Employment: 26000, "Mean Annual Wage": "$255,110", "Affordability Index": 85.03, training: "extensive_training_required"},
-        {Occupation: "Anesthesiologists", Employment: 15000, "Mean Annual Wage": "$261,730", "Affordability Index": 87.24, training: "extensive_training_required"}
-      ],
-      "Postsecondary Professors": [
-        {Occupation: "Biological Science Professors", Employment: 2900, "Mean Annual Wage": "$101,580", "Affordability Index": 33.87, training: "extensive_training_required"},
-        {Occupation: "Business Professors", Employment: 5800, "Mean Annual Wage": "$120,680", "Affordability Index": 40.23, training: "extensive_training_required"},
-        {Occupation: "Engineering Professors", Employment: 3500, "Mean Annual Wage": "$112,970", "Affordability Index": 37.68, training: "extensive_training_required"},
-        {Occupation: "Education Professors", Employment: 4300, "Mean Annual Wage": "$83,920", "Affordability Index": 27.96, training: "extensive_training_required"}
-      ],
-      "Scientists": [
-        {Occupation: "Medical Scientists", Employment: 19000, "Mean Annual Wage": "$101,210", "Affordability Index": 33.74, training: "extensive_training_required"},
-        {Occupation: "Biochemists and Biophysicists", Employment: 5300, "Mean Annual Wage": "$94,130", "Affordability Index": 31.38, training: "extensive_training_required"},
-        {Occupation: "Microbiologists", Employment: 2300, "Mean Annual Wage": "$84,400", "Affordability Index": 28.12, training: "extensive_training_required"},
-        {Occupation: "Environmental Scientists and Specialists", Employment: 8300, "Mean Annual Wage": "$76,500", "Affordability Index": 25.51, training: "extensive_training_required"}
-      ]
+
+    function clearJobs() {
+      document.getElementById('jobTable').innerHTML = '';
     }
-  };
 
-  const catMap = {
-    "No formal educational credential": ["Creative & Craft Arts"],
-    "High school diploma or equivalent": ["Sales & Customer Service","Construction Trades","Logistics & Supply Chain"],
-    "Postsecondary nondegree award": ["Technical & Trade Technician"],
-    "Associate's degree": ["Assistant Roles","Technician Roles"],
-    "Bachelor's degree": ["Research & Applied Science","Education & Training","Marketing & Graphic Design"],
-    "Master's degree": ["Health Counselors & Mental Health","Physician's Assistant"],
-    "Doctoral/Professional degree": ["Physicians/Medical Doctors","Postsecondary Professors","Scientists"]
-  };
-
-  function populateCategory() {
-    const edu = document.getElementById('eduSelect').value;
-    const catSelect = document.getElementById('catSelect');
-    catSelect.innerHTML = '<option value="">-- Select Category --</option>';
-    if (edu && catMap[edu]) {
-      catMap[edu].forEach(cat => {
-        const opt = document.createElement('option'); opt.value=cat; opt.textContent=cat;
-        catSelect.appendChild(opt);
-      });
+    function populateJobs() {
+      const edu = document.getElementById('eduSelect').value;
+      const train = document.getElementById('trainSelect').value;
+      const cat = document.getElementById('catSelect').value;
+      const tbody = document.getElementById('jobTable');
+      tbody.innerHTML = '';
+      if (!edu || !cat) return;
+      data[edu][cat]
+        .filter(job => !train || job.training === train)
+        .forEach(job => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${job.Occupation}</td>
+            <td>${job.Employment.toLocaleString()}</td>
+            <td>${job['Mean Annual Wage']}</td>
+            <td>${job['Affordability Index']}</td>
+          `;
+          tbody.appendChild(row);
+        });
     }
-    clearFilters();
-  }
-
-  function clearFilters() {
-    document.getElementById('trainSelect').value='';
-    document.getElementById('catSelect').value='';
-    document.getElementById('jobTable').innerHTML='';
-  }
-
-  function populateJobs() {
-    const edu=document.getElementById('eduSelect').value;
-    const cat=document.getElementById('catSelect').value;
-    const train=document.getElementById('trainSelect').value;
-    const tbody=document.getElementById('jobTable'); tbody.innerHTML='';
-    if (!edu||!cat) return;
-    data[edu][cat]
-      .filter(job=>!train||job.training===train)
-      .forEach(job=>{
-        const row=document.createElement('tr');
-        row.innerHTML=`<td>${job.Occupation}</td><td>${job.Employment.toLocaleString()}</td><td>${job['Mean Annual Wage']}</td><td>${job['Affordability Index']}</td>`;
-        tbody.appendChild(row);
-      });
-  }
-</script>
-
+  </script>
 </body>
 </html>
