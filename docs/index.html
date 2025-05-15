@@ -260,11 +260,17 @@
           catSelect.appendChild(opt);
         });
       }
+      clearJobs();
+    }
+
+    function clearJobs() {
+      document.getElementById('jobTable').innerHTML = '';
+    }
 
     function populateJobs() {
       const edu = document.getElementById('eduSelect').value;
       const train = document.getElementById('trainSelect').value;
-      const cat = document.getElementById('catSelect').value;
+      const cat  = document.getElementById('catSelect').value;
       const tbody = document.getElementById('jobTable');
       tbody.innerHTML = '';
       if (!edu || !cat) return;
