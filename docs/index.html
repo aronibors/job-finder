@@ -100,8 +100,8 @@
 <section id="step5">
     <h2>Step 5: Download Data</h2>
     <p>The following spreadsheet has all the jobs, the # of job openings for said jobs, training required, mean annual wage, and affordability index:</p>
-    <p><a href="sandbox:/mnt/data/Optimization Data(min Education, max Job Availability, max pay, max affordable Housing (2).xlsx" download>Download the full spreadsheet</a></p>
-    <div class="nav-buttons">
+    <p><a href="sandbox:/mnt/data/Optimization%20Data(min%20Education,%20max%20Job%20Availability,%20max%20pay,%20max%20affordable%20Housing%20(2).xlsx" download>Download the full spreadsheet</a></p>
+
       <a href="#step4"><button>Back</button></a>
       <a href="#intro"><button>Exit</button></a>
     </div>
@@ -248,45 +248,42 @@
       "Doctoral/Professional degree": ["Physicians/Medical Doctors","Postsecondary Professors","Scientists"]
     };
 
-   function populateCategory() {
-      const edu = document.getElementById('eduSelect').value;
-      const catSelect = document.getElementById('catSelect');
-      catSelect.innerHTML = '<option value="">-- Select Category --</option>';
-      if (edu && catMap[edu]) {
-        catMap[edu].forEach(cat => {
-          const opt = document.createElement('option');
-          opt.value = cat;
-          opt.textContent = cat;
-          catSelect.appendChild(opt);
-        });
-      }
-      clearJobs();
+   document.getElementById('eduSelect').addEventListener('change', () => {
+    const edu = eduSelect.value;
+    catSelect.innerHTML = '<option value="">-- Select Category --</option>';
+    if (catMap[edu]) {
+      catMap[edu].forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        catSelect.appendChild(opt);
+      });
     }
+    jobTable.innerHTML = ''; // clear previous
+  });
 
-    function clearJobs() {
-      document.getElementById('jobTable').innerHTML = '';
-    }
-
-    function populateJobs() {
-      const edu = document.getElementById('eduSelect').value;
-      const train = document.getElementById('trainSelect').value;
-      const cat = document.getElementById('catSelect').value;
-      const tbody = document.getElementById('jobTable');
-      tbody.innerHTML = '';
+  // 2) Whenever category or training changes, redraw jobs
+  ['catSelect','trainSelect'].forEach(id => {
+    document.getElementById(id).addEventListener('change', () => {
+      const edu   = eduSelect.value;
+      const cat   = catSelect.value;
+      const train = trainSelect.value;
+      jobTable.innerHTML = '';
       if (!edu || !cat) return;
       data[edu][cat]
         .filter(job => !train || job.training === train)
         .forEach(job => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${job.Occupation}</td>
-            <td>${job.Employment.toLocaleString()}</td>
-            <td>${job['Mean Annual Wage']}</td>
-            <td>${job['Affordability Index']}</td>
-          `;
-          tbody.appendChild(row);
+          jobTable.insertAdjacentHTML('beforeend', `
+            <tr>
+              <td>${job.Occupation}</td>
+              <td>${job.Employment.toLocaleString()}</td>
+              <td>${job['Mean Annual Wage']}</td>
+              <td>${job['Affordability Index']}</td>
+            </tr>
+          `);
         });
-    }
-  </script>
+    });
+  });
+</script>
 </body>
 </html>
