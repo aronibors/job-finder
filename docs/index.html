@@ -105,7 +105,7 @@
       <a href="#step4"><button>Back</button></a>
       <a href="#intro"><button>Exit</button></a>
     </div>
-  </section>
+</section>
 
   <script>
     const data = {
@@ -249,38 +249,44 @@
     };
 
     function populateCategory() {
-    const edu = document.getElementById('eduSelect').value;
-    const catSelect = document.getElementById('catSelect');
-    catSelect.innerHTML = '<option value="">-- Select Category --</option>';
-    if (edu && catMap[edu]) {
-      catMap[edu].forEach(cat => {
-        const opt = document.createElement('option');
-        opt.value = cat;
-        opt.textContent = cat;
-        catSelect.appendChild(opt);
-      });
+      const edu = document.getElementById('eduSelect').value;
+      const catSelect = document.getElementById('catSelect');
+      catSelect.innerHTML = '<option value="">-- Select Category --</option>';
+      if (edu && catMap[edu]) {
+        catMap[edu].forEach(cat => {
+          const opt = document.createElement('option');
+          opt.value = cat;
+          opt.textContent = cat;
+          catSelect.appendChild(opt);
+        });
+      }
+      clearJobs();
+    }  // <-- ensure this closing brace is present
+
+    function clearJobs() {
+      document.getElementById('jobTable').innerHTML = '';
     }
 
-  function populateJobs() {
-    const edu   = document.getElementById('eduSelect').value;
-    const train = document.getElementById('trainSelect').value;
-    const cat   = document.getElementById('catSelect').value;
-    const tbody = document.getElementById('jobTable');
-    tbody.innerHTML = '';
-    if (!edu || !cat) return;
-    data[edu][cat]
-      .filter(job => !train || job.training === train)
-      .forEach(job => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${job.Occupation}</td>
-          <td>${job.Employment.toLocaleString()}</td>
-          <td>${job['Mean Annual Wage']}</td>
-          <td>${job['Affordability Index']}</td>
-        `;
-        tbody.appendChild(row);
-      });
-  }
-</script>
+    function populateJobs() {
+      const edu   = document.getElementById('eduSelect').value;
+      const train = document.getElementById('trainSelect').value;
+      const cat   = document.getElementById('catSelect').value;
+      const tbody = document.getElementById('jobTable');
+      tbody.innerHTML = '';
+      if (!edu || !cat) return;
+      data[edu][cat]
+        .filter(job => !train || job.training === train)
+        .forEach(job => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${job.Occupation}</td>
+            <td>${job.Employment.toLocaleString()}</td>
+            <td>${job['Mean Annual Wage']}</td>
+            <td>${job['Affordability Index']}</td>
+          `;
+          tbody.appendChild(row);
+        });
+    }
+  </script>
 </body>
 </html>
