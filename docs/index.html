@@ -248,7 +248,7 @@
       "Doctoral/Professional degree": ["Physicians/Medical Doctors","Postsecondary Professors","Scientists"]
     };
 
-    function populateCategory() {
+   function populateCategory() {
       const edu = document.getElementById('eduSelect').value;
       const catSelect = document.getElementById('catSelect');
       catSelect.innerHTML = '<option value="">-- Select Category --</option>';
@@ -261,16 +261,16 @@
         });
       }
       clearJobs();
-    }  // <-- ensure this closing brace is present
+    }
 
     function clearJobs() {
       document.getElementById('jobTable').innerHTML = '';
     }
 
     function populateJobs() {
-      const edu   = document.getElementById('eduSelect').value;
+      const edu = document.getElementById('eduSelect').value;
       const train = document.getElementById('trainSelect').value;
-      const cat   = document.getElementById('catSelect').value;
+      const cat = document.getElementById('catSelect').value;
       const tbody = document.getElementById('jobTable');
       tbody.innerHTML = '';
       if (!edu || !cat) return;
