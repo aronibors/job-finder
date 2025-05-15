@@ -248,10 +248,16 @@
       "Doctoral/Professional degree": ["Physicians/Medical Doctors","Postsecondary Professors","Scientists"]
     };
 
-   document.getElementById('eduSelect').addEventListener('change', () => {
+ const eduSelect   = document.getElementById('eduSelect');
+  const trainSelect = document.getElementById('trainSelect');
+  const catSelect   = document.getElementById('catSelect');
+  const jobTable    = document.getElementById('jobTable');
+
+  // When education level changes, populate categories
+  eduSelect.addEventListener('change', () => {
     const edu = eduSelect.value;
     catSelect.innerHTML = '<option value="">-- Select Category --</option>';
-    if (catMap[edu]) {
+    if (edu && catMap[edu]) {
       catMap[edu].forEach(cat => {
         const opt = document.createElement('option');
         opt.value = cat;
@@ -259,31 +265,33 @@
         catSelect.appendChild(opt);
       });
     }
-    jobTable.innerHTML = ''; // clear previous
+    jobTable.innerHTML = ''; // clear any old jobs
   });
 
-  // 2) Whenever category or training changes, redraw jobs
-  ['catSelect','trainSelect'].forEach(id => {
-    document.getElementById(id).addEventListener('change', () => {
-      const edu   = eduSelect.value;
-      const cat   = catSelect.value;
-      const train = trainSelect.value;
-      jobTable.innerHTML = '';
-      if (!edu || !cat) return;
-      data[edu][cat]
-        .filter(job => !train || job.training === train)
-        .forEach(job => {
-          jobTable.insertAdjacentHTML('beforeend', `
-            <tr>
-              <td>${job.Occupation}</td>
-              <td>${job.Employment.toLocaleString()}</td>
-              <td>${job['Mean Annual Wage']}</td>
-              <td>${job['Affordability Index']}</td>
-            </tr>
-          `);
-        });
-    });
-  });
+  // Function to render job rows based on selections
+  function populateJobs() {
+    const edu   = eduSelect.value;
+    const cat   = catSelect.value;
+    const train = trainSelect.value;
+    jobTable.innerHTML = '';
+    if (!edu || !cat) return;
+    data[edu][cat]
+      .filter(job => !train || job.training === train)
+      .forEach(job => {
+        jobTable.insertAdjacentHTML('beforeend', `
+          <tr>
+            <td>${job.Occupation}</td>
+            <td>${job.Employment.toLocaleString()}</td>
+            <td>${job['Mean Annual Wage']}</td>
+            <td>${job['Affordability Index']}</td>
+          </tr>
+        `);
+      });
+  }
+
+  // When category or training changes, repopulate jobs
+  catSelect.addEventListener('change', populateJobs);
+  trainSelect.addEventListener('change', populateJobs);
 </script>
 </body>
 </html>
